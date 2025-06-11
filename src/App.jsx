@@ -75,11 +75,11 @@ function App() {
           transition={{ duration: 0.3 }}
           className={`min-h-screen flex flex-col transition-colors duration-500 ${isNerd ? 'bg-purple-950 text-lime-300' : 'bg-white text-gray-900'}`}
         >
-          <header className="sticky top-0 backdrop-blur bg-white/80 shadow flex justify-between items-center p-4 z-10">
+          <header className="sticky top-0 backdrop-blur bg-white/80 shadow flex flex-col items-center gap-2 p-4 z-10 sm:flex-row sm:justify-between">
             <h1 className="font-bold">React Tailwind</h1>
             <button
               onClick={toggleMode}
-              className={`px-3 py-1 rounded border transition-colors duration-500 ${isNerd ? 'bg-lime-300 text-purple-950' : 'bg-gray-900 text-white'}`}
+              className={`px-3 py-1 rounded border transition-colors duration-500 w-full sm:w-auto sm:ml-auto ${isNerd ? 'bg-lime-300 text-purple-950' : 'bg-gray-900 text-white'}`}
             >
               {isNerd ? 'Nerd Mode' : 'Normal Mode'}
             </button>
