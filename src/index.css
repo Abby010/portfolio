@@ -16,3 +16,7 @@
     animation: glitch 2s infinite both;
   }
 }
+
+.text-glow {
+  text-shadow: 0 0 6px rgba(163, 230, 53, 0.8);
+}
