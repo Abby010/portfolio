@@ -28,3 +28,18 @@
   scrollbar-width: none;
 }
 
+@layer components {
+  .terminal {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgb(0 0 0);
+    color: rgb(132 204 22);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    padding: 1rem;
+    max-height: 15rem;
+    overflow-y: auto;
+  }
+}
+
