@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 
 const MotionDiv = motion.div
 import NormalHero from './components/NormalHero.jsx'
@@ -9,11 +9,15 @@ import ProjectGrid from './components/ProjectGrid.jsx'
 import Timeline from './components/Timeline.jsx'
 import StatsHUD from './components/StatsHUD.jsx'
 import ProjectDetail from './components/ProjectDetail.jsx'
+import Terminal from './components/Terminal.jsx'
+import ResumeSection from './components/ResumeSection.jsx'
 
 function App() {
   const [mode, setMode] = useState('normal')
   const [glitch, setGlitch] = useState(false)
+  const [showResume, setShowResume] = useState(false)
   const isNerd = mode === 'nerd'
+  const navigate = useNavigate()
 
   const toggleMode = () => {
     if (isNerd) {
@@ -22,6 +26,23 @@ function App() {
       setGlitch(true)
       setMode('nerd')
     }
+  }
+
+  const handleCommand = (cmd) => {
+    if (cmd.startsWith('run ')) {
+      const id = cmd.slice(4)
+      navigate(`/project/${id}`)
+      return `Running ${id}...`
+    }
+    if (cmd === 'open resume') {
+      setShowResume(true)
+      return 'Opening resume...'
+    }
+    if (cmd === 'close resume') {
+      setShowResume(false)
+      return 'Closing resume...'
+    }
+    return 'Command not found'
   }
 
   useEffect(() => {
@@ -79,6 +100,8 @@ function App() {
         </MotionDiv>
       </AnimatePresence>
       {isNerd && <StatsHUD />}
+      {showResume && <ResumeSection onClose={() => setShowResume(false)} />}
+      {isNerd && <Terminal onCommand={handleCommand} />}
     </div>
   )
 }
