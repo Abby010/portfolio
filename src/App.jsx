@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { Routes, Route } from 'react-router-dom'
 
 const MotionDiv = motion.div
 import NormalHero from './components/NormalHero.jsx'
 import NerdHero from './components/NerdHero.jsx'
 import ProjectGrid from './components/ProjectGrid.jsx'
 import StatsHUD from './components/StatsHUD.jsx'
+import ProjectDetail from './components/ProjectDetail.jsx'
 
 function App() {
   const [mode, setMode] = useState('normal')
@@ -59,8 +61,18 @@ function App() {
             </button>
           </header>
           <main className="flex-1">
-            {isNerd ? <NerdHero /> : <NormalHero />}
-            <ProjectGrid isNerd={isNerd} />
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <>
+                    {isNerd ? <NerdHero /> : <NormalHero />}
+                    <ProjectGrid isNerd={isNerd} />
+                  </>
+                }
+              />
+              <Route path="/project/:id" element={<ProjectDetail />} />
+            </Routes>
           </main>
         </MotionDiv>
       </AnimatePresence>
