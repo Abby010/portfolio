@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import NormalHero from './components/NormalHero.jsx'
 import NerdHero from './components/NerdHero.jsx'
+import ProjectGrid from './components/ProjectGrid.jsx'
 
 function App() {
   const [mode, setMode] = useState('normal')
@@ -23,6 +24,7 @@ function App() {
       </header>
       <main className="flex-1">
         {isNerd ? <NerdHero /> : <NormalHero />}
+        <ProjectGrid isNerd={isNerd} />
       </main>
     </div>
   )
