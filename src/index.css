@@ -20,3 +20,11 @@
 .text-glow {
   text-shadow: 0 0 6px rgba(163, 230, 53, 0.8);
 }
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
