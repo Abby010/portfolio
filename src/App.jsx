@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import NormalHero from './components/NormalHero.jsx'
+import NerdHero from './components/NerdHero.jsx'
 
 function App() {
   const [mode, setMode] = useState('normal')
@@ -9,7 +11,7 @@ function App() {
   }
 
   return (
-    <div className={`min-h-screen transition-colors duration-500 ${isNerd ? 'bg-purple-950 text-lime-300' : 'bg-white text-gray-900'}`}>
+    <div className={`min-h-screen flex flex-col transition-colors duration-500 ${isNerd ? 'bg-purple-950 text-lime-300' : 'bg-white text-gray-900'}`}>
       <header className="sticky top-0 backdrop-blur bg-white/80 shadow flex justify-between items-center p-4 z-10">
         <h1 className="font-bold">React Tailwind</h1>
         <button
@@ -19,8 +21,8 @@ function App() {
           {isNerd ? 'Nerd Mode' : 'Normal Mode'}
         </button>
       </header>
-      <main className="p-4">
-        <p>Welcome to my portfolio!</p>
+      <main className="flex-1">
+        {isNerd ? <NerdHero /> : <NormalHero />}
       </main>
     </div>
   )
