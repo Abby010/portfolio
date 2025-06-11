@@ -41,5 +41,13 @@
     max-height: 15rem;
     overflow-y: auto;
   }
+
+  .cli-box {
+    background-color: rgb(0 0 0);
+    color: rgb(132 204 22);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    padding: 1rem;
+    overflow-y: auto;
+  }
 }
 

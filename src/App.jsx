@@ -12,6 +12,7 @@ import StatsHUD from './components/StatsHUD.jsx'
 import ProjectDetail from './components/ProjectDetail.jsx'
 import Terminal from './components/Terminal.jsx'
 import ResumeSection from './components/ResumeSection.jsx'
+import ContactSection from './components/ContactSection.jsx'
 
 function App() {
   const [mode, setMode] = useState('normal')
@@ -93,6 +94,7 @@ function App() {
                     <Timeline />
                     <ProjectGrid isNerd={isNerd} />
                     {isNerd && <ProjectNetwork />}
+                    <ContactSection isNerd={isNerd} />
                   </>
                 }
               />
