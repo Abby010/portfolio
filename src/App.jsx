@@ -6,6 +6,7 @@ const MotionDiv = motion.div
 import NormalHero from './components/NormalHero.jsx'
 import NerdHero from './components/NerdHero.jsx'
 import ProjectGrid from './components/ProjectGrid.jsx'
+import Timeline from './components/Timeline.jsx'
 import StatsHUD from './components/StatsHUD.jsx'
 import ProjectDetail from './components/ProjectDetail.jsx'
 
@@ -67,6 +68,7 @@ function App() {
                 element={
                   <>
                     {isNerd ? <NerdHero /> : <NormalHero />}
+                    <Timeline />
                     <ProjectGrid isNerd={isNerd} />
                   </>
                 }
