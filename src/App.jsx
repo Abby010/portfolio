@@ -5,6 +5,7 @@ const MotionDiv = motion.div
 import NormalHero from './components/NormalHero.jsx'
 import NerdHero from './components/NerdHero.jsx'
 import ProjectGrid from './components/ProjectGrid.jsx'
+import StatsHUD from './components/StatsHUD.jsx'
 
 function App() {
   const [mode, setMode] = useState('normal')
@@ -63,6 +64,7 @@ function App() {
           </main>
         </MotionDiv>
       </AnimatePresence>
+      {isNerd && <StatsHUD />}
     </div>
   )
 }
