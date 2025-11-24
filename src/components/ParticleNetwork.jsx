@@ -41,13 +41,16 @@ export default function ParticleNetwork() {
             draw() {
                 ctx.beginPath()
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.8)'
+                ctx.fillStyle = 'rgba(147, 197, 253, 0.9)'
+                ctx.shadowBlur = 4
+                ctx.shadowColor = 'rgba(147, 197, 253, 0.8)'
                 ctx.fill()
+                ctx.shadowBlur = 0
             }
         }
 
         // Create particles
-        const particleCount = 80
+        const particleCount = 120
         for (let i = 0; i < particleCount; i++) {
             particles.push(new Particle())
         }
@@ -73,8 +76,8 @@ export default function ParticleNetwork() {
                         ctx.beginPath()
                         ctx.moveTo(p1.x, p1.y)
                         ctx.lineTo(p2.x, p2.y)
-                        ctx.strokeStyle = `rgba(147, 197, 253, ${1 - distance / 150})`
-                        ctx.lineWidth = 1
+                        ctx.strokeStyle = `rgba(147, 197, 253, ${(1 - distance / 150) * 0.6})`
+                        ctx.lineWidth = 1.5
                         ctx.stroke()
                     }
                 })
