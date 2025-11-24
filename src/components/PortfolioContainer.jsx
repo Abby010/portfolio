@@ -2,12 +2,14 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import ParticleNetwork from './ParticleNetwork'
 import ProfessionalJourney from './ProfessionalJourney'
+import AwardsRecognition from './AwardsRecognition'
 
 const NAV_ITEMS = [
   { id: 'work', label: 'Work' },
   { id: 'about', label: 'About' },
   { id: 'experience', label: 'Experience' },
   { id: 'education', label: 'Education' },
+  { id: 'awards', label: 'Awards' },
   { id: 'contact', label: 'Contact' }
 ]
 
@@ -114,10 +116,13 @@ export default function PortfolioContainer() {
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
-                  className={`text-sm font-medium transition-colors ${currentPage === item.id
-                    ? 'text-blue-600 border-b-2 border-blue-600'
-                    : 'text-gray-600 hover:text-gray-900'
-                    }`}
+                  className={`text-sm font-medium transition-colors ${
+                    currentPage === item.id
+                      ? item.id === 'awards'
+                        ? 'text-red-600 border-b-2 border-red-600'
+                        : 'text-blue-600 border-b-2 border-blue-600'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
                 >
                   {item.label}
                 </button>
@@ -305,6 +310,29 @@ export default function PortfolioContainer() {
                 </div>
               </div>
             </section>
+          </motion.div>
+        )}
+
+        {currentPage === 'awards' && (
+          <motion.div
+            key="awards"
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={{ duration: 0.5 }}
+          >
+            {/* Awards & Recognition Page */}
+            <div className="relative min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-orange-900">
+              {/* Darker particle network overlay */}
+              <div className="fixed inset-0 overflow-hidden opacity-60">
+                <ParticleNetwork />
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-900/50 via-purple-900/50 to-orange-900/50 pointer-events-none" />
+              </div>
+              <section className="relative z-10 pt-20 pb-24 px-6">
+                <AwardsRecognition />
+              </section>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
