@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import RainBackground from './RainBackground'
 
@@ -27,6 +27,16 @@ const SECTIONS = [
 
 function PortfolioContainer() {
   const [currentIndex, setCurrentIndex] = useState(0)
+
+  // Auto-rotate sections every 8 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      console.log("Switching!")
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % SECTIONS.length)
+    }, 8000)
+
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <div className="relative min-h-screen w-full bg-slate-900 flex items-center justify-center">
