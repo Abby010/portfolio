@@ -35,37 +35,37 @@ const PROJECTS_FEATURED = [
   {
     id: 1,
     title: 'Urban Redesign',
-    subtitle: 'Architecture',
+    subtitle: '',
     image: 'https://placehold.co/600x400/2563eb/white?text=Urban',
   },
   {
     id: 2,
     title: 'Generative Art Study',
-    subtitle: 'Digital Art',
+    subtitle: '',
     image: 'https://placehold.co/600x400/0ea5e9/white?text=Art',
   },
   {
     id: 3,
     title: 'Industrial Design Concept',
-    subtitle: 'Product Design',
+    subtitle: '',
     image: 'https://placehold.co/600x400/06b6d4/white?text=Industrial',
   },
   {
     id: 4,
-    title: 'Project Beta',
-    subtitle: 'Urban Redesign',
+    title: 'Project Beta: Urban Redesign',
+    subtitle: '',
     image: 'https://placehold.co/600x400/8b5cf6/white?text=Beta',
   },
   {
     id: 5,
     title: 'Landscape Photography',
-    subtitle: 'Photography',
+    subtitle: '',
     image: 'https://placehold.co/600x400/ec4899/white?text=Landscape',
   },
   {
     id: 6,
-    title: 'Mobile App UI/X',
-    subtitle: 'Kinetic Typography',
+    title: 'Mobile App UI/UX',
+    subtitle: '',
     image: 'https://placehold.co/600x400/14b8a6/white?text=Mobile',
   }
 ]
@@ -222,12 +222,14 @@ export default function PortfolioContainer() {
                         />
                       </div>
                       <div className="p-6">
-                        <h3 className="text-lg font-bold text-gray-900 mb-1">
+                        <h3 className="text-lg font-bold text-gray-900 mb-4">
                           {project.title}
                         </h3>
-                        <p className="text-sm text-gray-600 mb-4">
-                          {project.subtitle}
-                        </p>
+                        {project.subtitle && (
+                          <p className="text-sm text-gray-600 mb-4">
+                            {project.subtitle}
+                          </p>
+                        )}
                         <button className="w-full py-2.5 px-4 border-2 border-gray-900 text-gray-900 font-medium rounded-lg hover:bg-gray-900 hover:text-white transition-colors duration-300">
                           View Case Study
                         </button>
@@ -267,15 +269,15 @@ export default function PortfolioContainer() {
                   {/* Right: Bio Content */}
                   <div className="space-y-6">
                     <h2 className="text-4xl md:text-5xl font-black text-gray-900">
-                      ABOUT ABHISHEK MEHTA
+                      ABOUT JOHN DOE
                     </h2>
                     <p className="text-xl text-gray-700 font-semibold">
                       Creative Technologist & Designer
                     </p>
                     <p className="text-gray-600 leading-relaxed">
-                      I'm a Full-Stack Software Engineer specialized in building scalable cloud infrastructure and mobile applications. With 3+ years of industry experience, I create meaningful digital products that balance user needs with business goals.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                       <br /><br />
-                      My expertise spans AWS, Pulumi, React, and mobile development. I'm passionate about solving complex problems with clean, efficient code and always learning new technologies.
+                      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                     </p>
                     <button className="px-8 py-3 border-2 border-gray-900 text-gray-900 font-medium rounded-lg hover:bg-gray-900 hover:text-white transition-colors duration-300">
                       Download CV
@@ -348,8 +350,7 @@ export default function PortfolioContainer() {
       <footer className="relative z-10 py-8 text-center">
         <div className="flex items-center justify-center gap-6 text-sm text-gray-500">
           <a href="#" className="hover:text-gray-900 transition-colors">LinkedIn</a>
-          <span>© JOHN DOE</span>
-          <span>ALL RIGHTS RESERVED</span>
+          <span>© JOHN DOE ALL RIGHTS RESERVED</span>
         </div>
       </footer>
     </div>
