@@ -31,6 +31,14 @@ function PortfolioContainer() {
   return (
     <div className="relative min-h-screen w-full bg-slate-900 flex items-center justify-center">
       <RainBackground />
+
+      {/* Wiper - Hidden off-screen, ready to animate */}
+      <motion.div
+        className="absolute -left-40 top-0 z-50 h-[120vh] w-32 backdrop-blur-xl flex items-center justify-center"
+      >
+        <div className="h-full w-2 bg-slate-800" />
+      </motion.div>
+
       <div className="relative z-10 px-8">
         <div className="backdrop-blur-md bg-slate-900/40 border border-white/10 rounded-2xl p-12 max-w-2xl shadow-2xl text-center font-mono">
           <h1 className="text-white text-4xl md:text-5xl font-bold mb-4">
