@@ -27,12 +27,29 @@ const SECTIONS = [
 
 function PortfolioContainer() {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [isWiping, setIsWiping] = useState(false)
+
+  // Handle wiper animation and text switching
+  const handleWipe = async () => {
+    setIsWiping(true)
+
+    // Wait 900ms for wiper to reach center
+    await new Promise(resolve => setTimeout(resolve, 900))
+
+    // Switch the text while wiper is covering it
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % SECTIONS.length)
+
+    // Wait 900ms for wiper to finish moving right
+    await new Promise(resolve => setTimeout(resolve, 900))
+
+    setIsWiping(false)
+  }
 
   // Auto-rotate sections every 8 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       console.log("Switching!")
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % SECTIONS.length)
+      handleWipe()
     }, 8000)
 
     return () => clearInterval(interval)
@@ -42,9 +59,11 @@ function PortfolioContainer() {
     <div className="relative min-h-screen w-full bg-slate-900 flex items-center justify-center">
       <RainBackground />
 
-      {/* Wiper - Hidden off-screen, ready to animate */}
+      {/* Wiper - Animated squeegee effect */}
       <motion.div
-        className="absolute -left-40 top-0 z-50 h-[120vh] w-32 backdrop-blur-xl flex items-center justify-center"
+        className="absolute top-0 z-50 h-[120vh] w-32 backdrop-blur-xl flex items-center justify-center"
+        animate={isWiping ? { left: "120%" } : { left: "-20%" }}
+        transition={{ duration: 1.8, ease: "easeInOut" }}
       >
         <div className="h-full w-2 bg-slate-800" />
       </motion.div>
