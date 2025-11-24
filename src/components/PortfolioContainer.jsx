@@ -88,17 +88,15 @@ export default function PortfolioContainer() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 font-sans relative">
+    <div className="min-h-screen font-sans relative" style={{ background: 'linear-gradient(to bottom right, #eff6ff, #fae8ff, #fce7f3)' }}>
 
       {/* Particle Network Background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 1 }}>
+      <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
         <ParticleNetwork />
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 via-purple-400/20 to-transparent" />
       </div>
 
       {/* Navigation */}
-      <nav className="relative bg-white/80 backdrop-blur-md border-b border-gray-200/50" style={{ zIndex: 10 }}>
+      <nav className="relative bg-white/80 backdrop-blur-md border-b border-gray-200/50" style={{ zIndex: 100 }}>
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
@@ -142,7 +140,7 @@ export default function PortfolioContainer() {
             transition={{ duration: 0.5 }}
           >
             {/* Hero Section */}
-            <section className="relative pt-32 pb-20 px-6" style={{ zIndex: 10 }}>
+            <section className="relative pt-32 pb-20 px-6" style={{ zIndex: 50 }}>
               <div className="max-w-7xl mx-auto text-center">
                 <h1
                   className="text-7xl md:text-9xl font-black italic text-gray-900 mb-8 leading-none glitch-text"
@@ -156,7 +154,7 @@ export default function PortfolioContainer() {
             </section>
 
             {/* Project Cards */}
-            <section className="relative pb-24 px-6" style={{ zIndex: 10 }}>
+            <section className="relative pb-24 px-6" style={{ zIndex: 50 }}>
               <div className="max-w-7xl mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                   {PROJECTS_HERO.map((project, index) => (
