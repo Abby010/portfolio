@@ -31,13 +31,15 @@ function PortfolioContainer() {
   return (
     <div className="relative min-h-screen w-full bg-slate-900 flex items-center justify-center">
       <RainBackground />
-      <div className="relative z-10 text-center px-8">
-        <h1 className="text-white font-sans text-4xl font-bold mb-4">
-          {SECTIONS[currentIndex].title}
-        </h1>
-        <p className="text-white font-sans text-lg opacity-80">
-          {SECTIONS[currentIndex].text}
-        </p>
+      <div className="relative z-10 px-8">
+        <div className="backdrop-blur-md bg-slate-900/40 border border-white/10 rounded-2xl p-12 max-w-2xl shadow-2xl text-center font-mono">
+          <h1 className="text-white text-4xl md:text-5xl font-bold mb-4">
+            {SECTIONS[currentIndex].title}
+          </h1>
+          <p className="text-slate-300 text-lg leading-relaxed">
+            {SECTIONS[currentIndex].text}
+          </p>
+        </div>
       </div>
     </div>
   )
