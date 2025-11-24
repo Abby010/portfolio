@@ -28,6 +28,7 @@ const SECTIONS = [
 function PortfolioContainer() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isWiping, setIsWiping] = useState(false)
+  const [isHovering, setIsHovering] = useState(false)
 
   // Handle wiper animation and text switching
   const handleWipe = async () => {
@@ -45,15 +46,19 @@ function PortfolioContainer() {
     setIsWiping(false)
   }
 
-  // Auto-rotate sections every 8 seconds
+  // Auto-rotate sections every 8 seconds (pauses on hover)
   useEffect(() => {
     const interval = setInterval(() => {
-      console.log("Switching!")
-      handleWipe()
+      if (!isHovering) {
+        console.log("Switching!")
+        handleWipe()
+      } else {
+        console.log("Paused - hovering")
+      }
     }, 8000)
 
     return () => clearInterval(interval)
-  }, [])
+  }, [isHovering])
 
   return (
     <div className="relative min-h-screen w-full bg-slate-900 flex items-center justify-center">
@@ -76,7 +81,11 @@ function PortfolioContainer() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 120, opacity: 0, rotate: -2 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
-            className="backdrop-blur-md bg-slate-900/40 border border-white/10 rounded-2xl p-12 max-w-2xl shadow-2xl text-center font-mono"
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+            className={`backdrop-blur-md border border-white/10 rounded-2xl p-12 max-w-2xl shadow-2xl text-center font-mono transition-colors duration-300 ${
+              isHovering ? 'bg-slate-900/60' : 'bg-slate-900/40'
+            }`}
           >
             <h1 className="text-white text-4xl md:text-5xl font-bold mb-4">
               {SECTIONS[currentIndex].title}
