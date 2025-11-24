@@ -103,11 +103,8 @@ export default function PortfolioContainer() {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
-                JD
-              </div>
-              <span className="text-sm font-medium text-gray-600 uppercase tracking-wider">
-                JOHN DOE_CREATIVE PORTFOLIO
+              <span className="text-sm font-medium text-gray-900 uppercase tracking-wider">
+                JD.JOHN DOE_CREATIVE PORTFOLIO
               </span>
             </div>
 
