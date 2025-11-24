@@ -269,19 +269,19 @@ export default function PortfolioContainer() {
                   EDUCATION
                 </h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div className="flex flex-col md:flex-row gap-8 max-w-4xl mx-auto items-start">
                   {/* Education Card 1 */}
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2, duration: 0.6 }}
-                    className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow"
+                    className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow flex-1 -mt-8"
                   >
                     <p className="text-sm text-gray-600 font-medium mb-2">2028 - Present</p>
                     <h3 className="text-2xl font-bold text-gray-900 mb-3">
                       Bachelor of Science in Industrial Design
                     </h3>
-                    <p className="text-gray-700 font-medium mb-2">ArtCenter College of Design</p>
+                    <p className="text-gray-700 font-medium mb-2">AriCester College of Design</p>
                     <p className="text-sm text-gray-600">
                       Graduated with honors. Dean's List all semesters.
                     </p>
@@ -292,13 +292,12 @@ export default function PortfolioContainer() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4, duration: 0.6 }}
-                    className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow"
+                    className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow flex-1"
                   >
                     <p className="text-sm text-gray-600 font-medium mb-2">2014 - 2019</p>
                     <h3 className="text-2xl font-bold text-gray-900 mb-3">
                       Associate of Arts in Fine Arts
                     </h3>
-                    <p className="text-gray-700 font-medium mb-2">Community College</p>
                     <p className="text-sm text-gray-600">
                       Focused on digital illustration & 3D modeling.
                     </p>
