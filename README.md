@@ -1,6 +1,15 @@
-# React Tailwind Layout
+# John Doe Creative Portfolio
 
-This project demonstrates a simple React layout styled with Tailwind CSS. It features a sticky header with a button that toggles between **Normal** and **Nerd** mode. Colors transition smoothly when switching modes, and the entire page animates using **Framer Motion**. Switching to Nerd mode triggers a glitch-style flicker effect and reveals a floating HUD with GitHub statistics.
+A modern, interactive portfolio website featuring multiple pages including Work, About, Experience, Education, Awards, and Contact sections. Built with React, Tailwind CSS, and Framer Motion.
+
+## Features
+
+- **Work Page**: Showcase of featured projects with glitch effects
+- **About Page**: Personal bio and information
+- **Experience Page**: Professional journey timeline with animated path and lightning effects
+- **Education Page**: Academic achievements and credentials
+- **Awards Page**: Recognition and achievements with network layout
+- **Contact Page**: Interactive contact form with spinning particle globe
 
 ## Development
 
