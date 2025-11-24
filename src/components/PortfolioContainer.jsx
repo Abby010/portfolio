@@ -13,19 +13,19 @@ const NAV_ITEMS = [
 const PROJECTS_HERO = [
   {
     id: 1,
-    title: 'Project Alpha',
+    title: 'Project Alpha: Urban Redesign',
     subtitle: 'Urban Redesign',
     image: 'https://placehold.co/600x400/2563eb/white?text=Urban+Redesign',
   },
   {
     id: 2,
-    title: 'Project Beta',
+    title: 'Project Beta: Generative Art',
     subtitle: 'Generative Art',
     image: 'https://placehold.co/600x400/0ea5e9/white?text=Generative+Art',
   },
   {
     id: 3,
-    title: 'Project Gamma',
+    title: 'Project Gamma: Industrial Design',
     subtitle: 'Industrial Design',
     image: 'https://placehold.co/600x400/06b6d4/white?text=Industrial+Design',
   }
@@ -100,10 +100,10 @@ export default function PortfolioContainer() {
             {/* Logo */}
             <div className="flex items-center gap-2">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
-                AM
+                JD
               </div>
               <span className="text-sm font-medium text-gray-600 uppercase tracking-wider">
-                Abhishek Mehta_Creative Portfolio
+                JOHN DOE_CREATIVE PORTFOLIO
               </span>
             </div>
 
@@ -141,7 +141,7 @@ export default function PortfolioContainer() {
             <section className="relative z-10 pt-32 pb-20 px-6">
               <div className="max-w-7xl mx-auto text-center">
                 <h1
-                  className="text-7xl md:text-9xl font-black italic text-gray-900 mb-8 leading-none"
+                  className="text-7xl md:text-9xl font-black italic text-gray-900 mb-8 leading-none glitch-text"
                   style={{ fontFamily: 'Georgia, serif' }}
                 >
                   PUSHING
@@ -348,9 +348,8 @@ export default function PortfolioContainer() {
       <footer className="relative z-10 py-8 text-center">
         <div className="flex items-center justify-center gap-6 text-sm text-gray-500">
           <a href="#" className="hover:text-gray-900 transition-colors">LinkedIn</a>
-          <a href="#" className="hover:text-gray-900 transition-colors">GitHub</a>
-          <a href="#" className="hover:text-gray-900 transition-colors">Dribbble</a>
-          <span>© 2025 Abhishek Mehta. All Rights Reserved.</span>
+          <span>© JOHN DOE</span>
+          <span>ALL RIGHTS RESERVED</span>
         </div>
       </footer>
     </div>
