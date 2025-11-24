@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import ParticleNetwork from './ParticleNetwork'
 import ProfessionalJourney from './ProfessionalJourney'
 import AwardsRecognition from './AwardsRecognition'
+import ContactPage from './ContactPage'
 
 const NAV_ITEMS = [
   { id: 'work', label: 'Work' },
@@ -333,6 +334,22 @@ export default function PortfolioContainer() {
                 <AwardsRecognition />
               </section>
             </div>
+          </motion.div>
+        )}
+
+        {currentPage === 'contact' && (
+          <motion.div
+            key="contact"
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={{ duration: 0.5 }}
+          >
+            {/* Contact Page */}
+            <section className="relative z-10 pt-20 pb-24 px-6">
+              <ContactPage />
+            </section>
           </motion.div>
         )}
       </AnimatePresence>
