@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import RainBackground from './RainBackground'
 
 const SECTIONS = [
@@ -50,14 +50,23 @@ function PortfolioContainer() {
       </motion.div>
 
       <div className="relative z-10 px-8">
-        <div className="backdrop-blur-md bg-slate-900/40 border border-white/10 rounded-2xl p-12 max-w-2xl shadow-2xl text-center font-mono">
-          <h1 className="text-white text-4xl md:text-5xl font-bold mb-4">
-            {SECTIONS[currentIndex].title}
-          </h1>
-          <p className="text-slate-300 text-lg leading-relaxed">
-            {SECTIONS[currentIndex].text}
-          </p>
-        </div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentIndex}
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 120, opacity: 0, rotate: -2 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className="backdrop-blur-md bg-slate-900/40 border border-white/10 rounded-2xl p-12 max-w-2xl shadow-2xl text-center font-mono"
+          >
+            <h1 className="text-white text-4xl md:text-5xl font-bold mb-4">
+              {SECTIONS[currentIndex].title}
+            </h1>
+            <p className="text-slate-300 text-lg leading-relaxed">
+              {SECTIONS[currentIndex].text}
+            </p>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   )
