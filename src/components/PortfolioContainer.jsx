@@ -129,54 +129,64 @@ function PortfolioContainer() {
   // Render layouts based on current index
   const renderContent = () => {
     switch (currentIndex) {
-      case 0: // Profile - Flex Row
+      case 0: // Profile - Polished FAANG Style
         return (
-          <div className="flex flex-row items-center gap-10 w-full">
-            {/* Left: Profile Picture */}
-            <div className="flex-shrink-0">
+          <div className="flex flex-col md:flex-row items-center gap-12 w-full h-full justify-center">
+            {/* Left: Profile Picture with Glow Ring */}
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-[2rem] blur opacity-30 group-hover:opacity-60 transition duration-1000"></div>
               <img
-                src="https://placehold.co/400x400/22d3ee/1e293b?text=Profile+Pic"
+                src="https://placehold.co/400x400/22d3ee/1e293b?text=Abby"
                 alt="Abby Profile"
-                className="w-56 h-56 rounded-2xl object-cover shadow-lg flex-shrink-0"
+                className="relative w-48 h-48 md:w-56 md:h-56 rounded-[2rem] object-cover shadow-2xl ring-4 ring-white/50"
               />
             </div>
 
             {/* Right: Bio + Social Icons */}
-            <div className="flex-1 text-left space-y-6">
-              <h1 className={`${currentSection.color} text-4xl md:text-5xl font-bold`}>
-                Software Engineer
-              </h1>
-              <p className="text-slate-800 text-lg leading-relaxed">
-                Full-Stack Engineer specialized in Cloud (AWS/Pulumi) & Mobile.
-                I build systems that generate revenue and reduce debug time.
+            <div className="flex-1 text-center md:text-left space-y-6 max-w-lg">
+              <div className="space-y-2">
+                <h2 className="text-blue-600 font-semibold tracking-wide uppercase text-sm">
+                  Hello, I'm
+                </h2>
+                <h1 className="text-slate-900 text-5xl md:text-6xl font-extrabold tracking-tight">
+                  Abhishek Mehta
+                </h1>
+                <p className="text-slate-500 text-xl font-medium">
+                  Full-Stack Software Engineer
+                </p>
+              </div>
+
+              <p className="text-slate-600 text-lg leading-relaxed">
+                Specialized in <span className="font-semibold text-slate-800">Cloud (AWS/Pulumi)</span> & <span className="font-semibold text-slate-800">Mobile</span>.
+                I build robust systems that generate revenue and drastically reduce debug time.
               </p>
 
-              {/* Social Icons Inline */}
-              <div className="flex items-center gap-4 pt-4">
+              {/* Social Icons - Pill Design */}
+              <div className="flex items-center justify-center md:justify-start gap-4 pt-2">
                 <a
                   href="https://github.com/Abby010"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-slate-800 hover:text-blue-900 transition-colors duration-300 bg-white/50 px-4 py-2 rounded-full border border-white/20 shadow-sm"
+                  className="group flex items-center gap-2 bg-white/60 hover:bg-white/90 text-slate-700 hover:text-blue-600 px-5 py-2.5 rounded-full shadow-sm hover:shadow-md transition-all duration-300 border border-white/40"
                 >
-                  <Github size={20} />
-                  <span className="text-sm">GitHub</span>
+                  <Github size={18} className="group-hover:scale-110 transition-transform" />
+                  <span className="font-medium">GitHub</span>
                 </a>
                 <a
                   href="https://linkedin.com/in/yourprofile"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-slate-800 hover:text-blue-900 transition-colors duration-300 bg-white/50 px-4 py-2 rounded-full border border-white/20 shadow-sm"
+                  className="group flex items-center gap-2 bg-white/60 hover:bg-white/90 text-slate-700 hover:text-blue-700 px-5 py-2.5 rounded-full shadow-sm hover:shadow-md transition-all duration-300 border border-white/40"
                 >
-                  <Linkedin size={20} />
-                  <span className="text-sm">LinkedIn</span>
+                  <Linkedin size={18} className="group-hover:scale-110 transition-transform" />
+                  <span className="font-medium">LinkedIn</span>
                 </a>
                 <a
                   href="mailto:your.email@example.com"
-                  className="flex items-center gap-2 text-slate-800 hover:text-blue-900 transition-colors duration-300 bg-white/50 px-4 py-2 rounded-full border border-white/20 shadow-sm"
+                  className="group flex items-center gap-2 bg-white/60 hover:bg-white/90 text-slate-700 hover:text-cyan-600 px-5 py-2.5 rounded-full shadow-sm hover:shadow-md transition-all duration-300 border border-white/40"
                 >
-                  <Mail size={20} />
-                  <span className="text-sm">Email</span>
+                  <Mail size={18} className="group-hover:scale-110 transition-transform" />
+                  <span className="font-medium">Email</span>
                 </a>
               </div>
             </div>
@@ -186,41 +196,41 @@ function PortfolioContainer() {
       case 1: // Education - Split Image Header
         return (
           <div className="w-full space-y-8">
-            <h1 className={`${currentSection.color} text-4xl font-bold text-center mb-6`}>
+            <h1 className={`${currentSection.color} text-4xl font-bold text-center mb-6 tracking-tight`}>
               Education
             </h1>
 
             {/* Top: Two Images Side by Side */}
-            <div className="grid grid-cols-2 gap-4 h-48 w-full mb-6">
-              <div className="overflow-hidden rounded-lg h-full">
+            <div className="grid grid-cols-2 gap-6 h-48 w-full mb-6">
+              <div className="overflow-hidden rounded-2xl h-full shadow-md group">
                 <img
                   src="https://placehold.co/600x400/3b82f6/1e293b?text=Award+Moment"
                   alt="Taking Award"
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
-              <div className="overflow-hidden rounded-lg h-full">
+              <div className="overflow-hidden rounded-2xl h-full shadow-md group">
                 <img
                   src="https://placehold.co/600x400/3b82f6/1e293b?text=Team+Photo"
                   alt="SafetyCulture Team"
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
             </div>
 
             {/* Bottom: Stats in 2-Column Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
-              <div className="bg-white/40 rounded-xl p-6 border border-white/50 shadow-sm">
-                <div className="text-5xl font-bold text-blue-900 mb-2">92.5%</div>
-                <div className="text-slate-800 font-semibold text-lg">WAM Score</div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+              <div className="bg-white/50 rounded-2xl p-6 border border-white/60 shadow-sm hover:shadow-md transition-shadow">
+                <div className="text-5xl font-extrabold text-blue-900 mb-2">92.5%</div>
+                <div className="text-slate-800 font-bold text-lg">WAM Score</div>
                 <div className="text-slate-600 text-sm mt-1">Top 5% of Cohort</div>
               </div>
-              <div className="bg-white/40 rounded-xl p-6 border border-white/50 shadow-sm">
-                <div className="text-3xl font-bold text-blue-900 mb-2">Dean's Scholar</div>
-                <div className="text-slate-800 font-semibold text-lg">Bachelor of Computer Science</div>
+              <div className="bg-white/50 rounded-2xl p-6 border border-white/60 shadow-sm hover:shadow-md transition-shadow">
+                <div className="text-3xl font-extrabold text-blue-900 mb-2">Dean's Scholar</div>
+                <div className="text-slate-800 font-bold text-lg">Bachelor of Computer Science</div>
                 <div className="text-slate-600 text-sm mt-1">University of Wollongong</div>
               </div>
-              <div className="bg-white/40 rounded-xl p-6 border border-white/50 shadow-sm md:col-span-2">
+              <div className="bg-white/50 rounded-2xl p-6 border border-white/60 shadow-sm hover:shadow-md transition-shadow md:col-span-2">
                 <div className="text-2xl font-bold text-blue-900 mb-2">🏆 Academic Excellence Award</div>
                 <div className="text-slate-800 font-semibold">Human-Computer Interaction</div>
                 <div className="text-slate-600 text-sm mt-1">Top of class in HCI design and research</div>
@@ -232,7 +242,7 @@ function PortfolioContainer() {
       case 2: // Experience - Electric Zig-Zag
         return (
           <div className="w-full relative">
-            <h1 className={`${currentSection.color} text-4xl font-bold text-center mb-8`}>
+            <h1 className={`${currentSection.color} text-4xl font-bold text-center mb-10 tracking-tight`}>
               Experience
             </h1>
 
@@ -275,57 +285,57 @@ function PortfolioContainer() {
             </div>
 
             {/* Zig-Zag Stack */}
-            <div className="flex flex-col gap-6 relative z-10">
+            <div className="flex flex-col gap-8 relative z-10">
 
               {/* Item 1 (Left) */}
-              <div className={`w-[45%] self-start flex items-center gap-4 p-4 rounded-xl border transition-all duration-500 ${getCardGlowClass(0)}`}>
+              <div className={`w-[45%] self-start flex items-center gap-4 p-5 rounded-2xl border transition-all duration-500 ${getCardGlowClass(0)}`}>
                 <div className="flex-1 text-left">
-                  <h3 className="text-blue-900 font-bold text-lg">Matrix AI</h3>
-                  <p className="text-slate-700 text-xs font-medium">Software Engineer</p>
+                  <h3 className="text-blue-900 font-bold text-xl">Matrix AI</h3>
+                  <p className="text-slate-700 text-sm font-semibold">Software Engineer</p>
                 </div>
                 <img
                   src="https://placehold.co/100x100/2563eb/white?text=Matrix"
                   alt="Matrix AI"
-                  className="w-12 h-12 rounded-md object-contain flex-shrink-0"
+                  className="w-14 h-14 rounded-xl object-contain flex-shrink-0 shadow-sm"
                 />
               </div>
 
               {/* Item 2 (Right) */}
-              <div className={`w-[45%] self-end flex items-center gap-4 p-4 rounded-xl border transition-all duration-500 ${getCardGlowClass(1)}`}>
+              <div className={`w-[45%] self-end flex items-center gap-4 p-5 rounded-2xl border transition-all duration-500 ${getCardGlowClass(1)}`}>
                 <img
                   src="https://placehold.co/100x100/0ea5e9/white?text=SC"
                   alt="SafetyCulture"
-                  className="w-12 h-12 rounded-md object-contain flex-shrink-0"
+                  className="w-14 h-14 rounded-xl object-contain flex-shrink-0 shadow-sm"
                 />
                 <div className="flex-1 text-left">
-                  <h3 className="text-blue-900 font-bold text-lg">SafetyCulture</h3>
-                  <p className="text-slate-700 text-xs font-medium">Mobile Intern</p>
+                  <h3 className="text-blue-900 font-bold text-xl">SafetyCulture</h3>
+                  <p className="text-slate-700 text-sm font-semibold">Mobile Intern</p>
                 </div>
               </div>
 
               {/* Item 3 (Left) */}
-              <div className={`w-[45%] self-start flex items-center gap-4 p-4 rounded-xl border transition-all duration-500 ${getCardGlowClass(2)}`}>
+              <div className={`w-[45%] self-start flex items-center gap-4 p-5 rounded-2xl border transition-all duration-500 ${getCardGlowClass(2)}`}>
                 <div className="flex-1 text-left">
-                  <h3 className="text-blue-900 font-bold text-lg">Geo Pulse</h3>
-                  <p className="text-slate-700 text-xs font-medium">Team Lead</p>
+                  <h3 className="text-blue-900 font-bold text-xl">Geo Pulse</h3>
+                  <p className="text-slate-700 text-sm font-semibold">Team Lead</p>
                 </div>
                 <img
                   src="https://placehold.co/100x100/06b6d4/white?text=Pulse"
                   alt="Geo Pulse"
-                  className="w-12 h-12 rounded-md object-contain flex-shrink-0"
+                  className="w-14 h-14 rounded-xl object-contain flex-shrink-0 shadow-sm"
                 />
               </div>
 
               {/* Item 4 (Right) */}
-              <div className={`w-[45%] self-end flex items-center gap-4 p-4 rounded-xl border transition-all duration-500 ${getCardGlowClass(3)}`}>
+              <div className={`w-[45%] self-end flex items-center gap-4 p-5 rounded-2xl border transition-all duration-500 ${getCardGlowClass(3)}`}>
                 <img
                   src="https://placehold.co/100x100/0891b2/white?text=UOW"
                   alt="UOW"
-                  className="w-12 h-12 rounded-md object-contain flex-shrink-0"
+                  className="w-14 h-14 rounded-xl object-contain flex-shrink-0 shadow-sm"
                 />
                 <div className="flex-1 text-left">
-                  <h3 className="text-blue-900 font-bold text-lg">UOW</h3>
-                  <p className="text-slate-700 text-xs font-medium">C++ Tutor</p>
+                  <h3 className="text-blue-900 font-bold text-xl">UOW</h3>
+                  <p className="text-slate-700 text-sm font-semibold">C++ Tutor</p>
                 </div>
               </div>
 
@@ -336,51 +346,51 @@ function PortfolioContainer() {
       case 3: // Volunteering - Gallery Layout
         return (
           <div className="w-full space-y-8">
-            <h1 className={`${currentSection.color} text-4xl font-bold text-center mb-6`}>
+            <h1 className={`${currentSection.color} text-4xl font-bold text-center mb-6 tracking-tight`}>
               Community & Volunteering
             </h1>
 
             {/* Top: 3 Portrait Images */}
-            <div className="grid grid-cols-3 gap-4">
-              <div className="overflow-hidden rounded-lg">
+            <div className="grid grid-cols-3 gap-6">
+              <div className="overflow-hidden rounded-2xl shadow-md group">
                 <img
                   src="https://placehold.co/150x200/10b981/1e293b?text=Vol+1"
                   alt="Video Game Society"
-                  className="h-32 w-full object-cover hover:scale-105 transition-transform duration-300"
+                  className="h-36 w-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
-              <div className="overflow-hidden rounded-lg">
+              <div className="overflow-hidden rounded-2xl shadow-md group">
                 <img
                   src="https://placehold.co/150x200/14b8a6/1e293b?text=Vol+2"
                   alt="Engineering Mentor"
-                  className="h-32 w-full object-cover hover:scale-105 transition-transform duration-300"
+                  className="h-36 w-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
-              <div className="overflow-hidden rounded-lg">
+              <div className="overflow-hidden rounded-2xl shadow-md group">
                 <img
                   src="https://placehold.co/150x200/06b6d4/1e293b?text=Vol+3"
                   alt="UOW Pulse"
-                  className="h-32 w-full object-cover hover:scale-105 transition-transform duration-300"
+                  className="h-36 w-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
             </div>
 
             {/* Bottom: Text Descriptions */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-white/40 rounded-xl p-5 border border-white/50 shadow-sm">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-white/50 rounded-2xl p-6 border border-white/60 shadow-sm hover:shadow-md transition-all">
                 <h3 className="text-blue-900 font-bold text-lg">Video Game Society</h3>
-                <p className="text-slate-700 text-sm font-medium mt-1">Executive - Well-Being Officer</p>
-                <p className="text-slate-600 text-sm mt-2">Fostering inclusive community for 200+ members</p>
+                <p className="text-slate-700 text-sm font-semibold mt-1">Executive - Well-Being Officer</p>
+                <p className="text-slate-600 text-sm mt-3 leading-relaxed">Fostering inclusive community for 200+ members</p>
               </div>
-              <div className="bg-white/40 rounded-xl p-5 border border-white/50 shadow-sm">
+              <div className="bg-white/50 rounded-2xl p-6 border border-white/60 shadow-sm hover:shadow-md transition-all">
                 <h3 className="text-blue-900 font-bold text-lg">UOW Engineering</h3>
-                <p className="text-slate-700 text-sm font-medium mt-1">Faculty Mentor</p>
-                <p className="text-slate-600 text-sm mt-2">Guiding first-year engineering students</p>
+                <p className="text-slate-700 text-sm font-semibold mt-1">Faculty Mentor</p>
+                <p className="text-slate-600 text-sm mt-3 leading-relaxed">Guiding first-year engineering students</p>
               </div>
-              <div className="bg-white/40 rounded-xl p-5 border border-white/50 shadow-sm">
+              <div className="bg-white/50 rounded-2xl p-6 border border-white/60 shadow-sm hover:shadow-md transition-all">
                 <h3 className="text-blue-900 font-bold text-lg">UOW Pulse</h3>
-                <p className="text-slate-700 text-sm font-medium mt-1">Campus Volunteer</p>
-                <p className="text-slate-600 text-sm mt-2">Supporting university events and culture</p>
+                <p className="text-slate-700 text-sm font-semibold mt-1">Campus Volunteer</p>
+                <p className="text-slate-600 text-sm mt-3 leading-relaxed">Supporting university events and culture</p>
               </div>
             </div>
           </div>
@@ -389,45 +399,48 @@ function PortfolioContainer() {
       case 4: // Projects - Terminal Aesthetic
         return (
           <div className="w-full">
-            <h1 className={`${currentSection.color} text-4xl font-bold text-center mb-8`}>
+            <h1 className={`${currentSection.color} text-4xl font-bold text-center mb-8 tracking-tight`}>
               Projects
             </h1>
 
             {/* Terminal Box */}
-            <div className="bg-black/80 rounded-xl p-8 border-2 border-cyan-500/30 font-mono text-left shadow-2xl">
+            <div className="bg-slate-950 rounded-2xl p-8 border border-slate-800 font-mono text-left shadow-2xl relative overflow-hidden">
+              {/* Subtle Glow inside terminal */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 blur-[80px] rounded-full pointer-events-none"></div>
+
               {/* Terminal Header */}
-              <div className="flex items-center gap-2 mb-6 pb-4 border-b border-cyan-500/30">
+              <div className="flex items-center gap-2 mb-6 pb-4 border-b border-slate-800">
                 <div className="w-3 h-3 rounded-full bg-red-500"></div>
                 <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                 <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                <span className="ml-4 text-slate-400 text-sm">terminal — projects</span>
+                <span className="ml-4 text-slate-500 text-xs tracking-widest uppercase">terminal — projects</span>
               </div>
 
               {/* Terminal Content */}
-              <div className="space-y-2 text-cyan-300">
+              <div className="space-y-3 text-cyan-300 text-sm md:text-base relative z-10">
                 <div className="flex items-center">
                   <span className="text-green-400">➜</span>
-                  <span className="ml-2">~/portfolio/projects</span>
+                  <span className="ml-2 text-blue-300">~/portfolio/projects</span>
                 </div>
                 <div className="text-white">
                   <span className="text-cyan-400">$</span> ls -la
                 </div>
-                <div className="pl-4 text-slate-400">
+                <div className="pl-4 text-slate-400 grid gap-1">
                   <div>drwxr-xr-x  12 abby staff   384 Jan 15 2025 .</div>
                   <div>drwxr-xr-x   8 abby staff   256 Jan 14 2025 ..</div>
                 </div>
                 <div className="text-white pt-4">
                   <span className="text-cyan-400">$</span> npm run compile
                 </div>
-                <div className="pl-4 text-slate-300">
+                <div className="pl-4 text-slate-300 grid gap-1">
                   <div>&gt; Compiling latest projects...</div>
                   <div>&gt; Optimizing portfolio showcase...</div>
-                  <div className="flex items-center mt-2">
+                  <div className="flex items-center mt-2 text-yellow-300">
                     <span>&gt; Status: Coming Soon</span>
-                    {blinkVisible && <span className="ml-1 bg-cyan-400 w-2 h-5 inline-block"></span>}
+                    {blinkVisible && <span className="ml-1 bg-yellow-300 w-2 h-5 inline-block"></span>}
                   </div>
                 </div>
-                <div className="text-slate-500 text-sm pt-6 italic">
+                <div className="text-slate-600 text-xs pt-8 italic">
                   // Featured projects will be deployed here soon
                 </div>
               </div>
@@ -441,7 +454,7 @@ function PortfolioContainer() {
   }
 
   return (
-    <div className="relative min-h-screen w-full bg-gradient-to-br from-sky-200 via-blue-100 to-sky-300 flex items-center justify-center overflow-hidden">
+    <div className="relative min-h-screen w-full bg-gradient-to-br from-sky-100 via-blue-50 to-sky-200 flex items-center justify-center overflow-hidden font-sans text-slate-900">
       <RainBackground ref={rainRef} />
 
       {/* Wiper - Animated squeegee effect */}
@@ -464,17 +477,20 @@ function PortfolioContainer() {
             transition={{ duration: 0.5, ease: "easeInOut" }}
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
-            className={`relative overflow-hidden backdrop-blur-xl border border-white/50 rounded-2xl p-8 md:p-12 w-full max-w-5xl mx-auto min-h-[550px] shadow-xl font-mono transition-colors duration-300 flex items-center ${isHovering ? 'bg-white/40' : 'bg-white/30'
+            className={`relative overflow-hidden backdrop-blur-2xl border border-white/40 rounded-[2.5rem] p-10 md:p-16 w-full max-w-5xl mx-auto min-h-[600px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 flex items-center ${isHovering ? 'bg-white/60 shadow-[0_30px_80px_-15px_rgba(0,0,0,0.15)]' : 'bg-white/40'
               }`}
           >
+            {/* Inner Glow for Glass Effect */}
+            <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_40px_rgba(255,255,255,0.5)] rounded-[2.5rem] z-0"></div>
+
             {/* Fog Layer - Overlay that gets opaque over time */}
             <div
-              className="absolute inset-0 z-20 pointer-events-none bg-white/20 backdrop-blur-[2px]"
+              className="absolute inset-0 z-20 pointer-events-none bg-white/30 backdrop-blur-[2px] transition-opacity duration-300"
               style={{ opacity: fogOpacity }}
             />
 
             {/* Content */}
-            <div className="relative z-10 w-full">
+            <div className="relative z-10 w-full h-full flex flex-col justify-center">
               {renderContent()}
             </div>
           </motion.div>
@@ -482,10 +498,10 @@ function PortfolioContainer() {
       </div>
 
       {/* Progress Bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 h-1 bg-slate-800/50">
+      <div className="fixed bottom-0 left-0 right-0 z-40 h-1.5 bg-slate-200">
         <motion.div
           key={currentIndex}
-          className="h-full bg-gradient-to-r from-cyan-500 to-blue-500"
+          className="h-full bg-gradient-to-r from-cyan-500 to-blue-600"
           initial={{ width: "0%" }}
           animate={{ width: "100%" }}
           transition={{ duration: 15, ease: "linear" }}
