@@ -1,33 +1,38 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Github, Linkedin, Mail } from 'lucide-react'
+import { Github, Linkedin, Mail, ArrowUpRight } from 'lucide-react'
 import RainBackground from './RainBackground'
 
 const SECTIONS = [
   {
     id: 0,
     title: "Software Engineer",
-    color: "text-blue-900"
+    color: "text-blue-900",
+    duration: 5000 // 5 seconds for Profile
   },
   {
     id: 1,
     title: "Education",
-    color: "text-blue-900"
+    color: "text-blue-900",
+    duration: 15000 // 15 seconds for others
   },
   {
     id: 2,
     title: "Experience",
-    color: "text-blue-900"
+    color: "text-blue-900",
+    duration: 15000
   },
   {
     id: 3,
     title: "Community & Volunteering",
-    color: "text-blue-900"
+    color: "text-blue-900",
+    duration: 15000
   },
   {
     id: 4,
     title: "Projects",
-    color: "text-blue-900"
+    color: "text-blue-900",
+    duration: 15000
   }
 ]
 
@@ -37,13 +42,14 @@ function PortfolioContainer() {
   const [isHovering, setIsHovering] = useState(false)
   const [blinkVisible, setBlinkVisible] = useState(true)
   const [fogOpacity, setFogOpacity] = useState(0)
-  const [progress, setProgress] = useState(0) // 0 to 1 over 15s
+  const [progress, setProgress] = useState(0) // 0 to 1 based on current section duration
 
   const rainRef = useRef(null)
   const startTimeRef = useRef(Date.now())
   const animationFrameRef = useRef()
 
   const currentSection = SECTIONS[currentIndex]
+  const currentDuration = currentSection.duration
 
   // Handle wiper animation and text switching
   const handleWipe = async () => {
@@ -69,15 +75,15 @@ function PortfolioContainer() {
     setIsWiping(false)
   }
 
-  // Timer Logic: Fog (0-1) and Progress (0-1) over 15s
+  // Timer Logic: Fog (0-1) and Progress (0-1) based on currentDuration
   useEffect(() => {
     const updateTimer = () => {
       if (isHovering || isWiping) {
         // Pause timer if hovering
-        startTimeRef.current = Date.now() - (progress * 15000)
+        startTimeRef.current = Date.now() - (progress * currentDuration)
       } else {
         const elapsed = Date.now() - startTimeRef.current
-        const newProgress = Math.min(elapsed / 15000, 1)
+        const newProgress = Math.min(elapsed / currentDuration, 1)
 
         setProgress(newProgress)
         setFogOpacity(newProgress) // Fog matches progress
@@ -88,21 +94,21 @@ function PortfolioContainer() {
     animationFrameRef.current = requestAnimationFrame(updateTimer)
 
     return () => cancelAnimationFrame(animationFrameRef.current)
-  }, [isHovering, isWiping, progress])
+  }, [isHovering, isWiping, progress, currentDuration])
 
-  // Auto-rotate sections every 15 seconds
+  // Auto-rotate sections based on currentDuration
   useEffect(() => {
-    const interval = setInterval(() => {
+    const timeout = setTimeout(() => {
       if (!isHovering) {
         console.log("Tick") // Debug log
         handleWipe()
       } else {
         console.log("Paused - hovering")
       }
-    }, 15000)
+    }, currentDuration)
 
-    return () => clearInterval(interval)
-  }, [isHovering])
+    return () => clearTimeout(timeout)
+  }, [currentIndex, isHovering, currentDuration]) // Re-run when currentIndex changes to get new duration
 
   // Blinking cursor effect for terminal
   useEffect(() => {
@@ -129,67 +135,82 @@ function PortfolioContainer() {
   // Render layouts based on current index
   const renderContent = () => {
     switch (currentIndex) {
-      case 0: // Profile - Polished FAANG Style
+      case 0: // Profile - Reference Layout Match
         return (
-          <div className="flex flex-col md:flex-row items-center gap-12 w-full h-full justify-center">
-            {/* Left: Profile Picture with Glow Ring */}
-            <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-[2rem] blur opacity-30 group-hover:opacity-60 transition duration-1000"></div>
-              <img
-                src="https://placehold.co/400x400/22d3ee/1e293b?text=Abby"
-                alt="Abby Profile"
-                className="relative w-48 h-48 md:w-56 md:h-56 rounded-[2rem] object-cover shadow-2xl ring-4 ring-white/50"
-              />
-            </div>
+          <div className="flex flex-col w-full h-full justify-center px-4 md:px-12">
 
-            {/* Right: Bio + Social Icons */}
-            <div className="flex-1 text-center md:text-left space-y-6 max-w-lg">
-              <div className="space-y-2">
-                <h2 className="text-blue-600 font-semibold tracking-wide uppercase text-sm">
-                  Hello, I'm
-                </h2>
-                <h1 className="text-slate-900 text-5xl md:text-6xl font-extrabold tracking-tight">
-                  Abhishek Mehta
-                </h1>
-                <p className="text-slate-500 text-xl font-medium">
-                  Full-Stack Software Engineer
+            {/* Top Row: Avatar + Annotation & Intro Text */}
+            <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-8 mb-8">
+
+              {/* Avatar with Annotation */}
+              <div className="relative mt-8 md:mt-0">
+                {/* Annotation Arrow & Text */}
+                <div className="absolute -top-12 -right-20 md:-right-32 flex flex-col items-start transform rotate-6">
+                  <span className="font-handwriting text-slate-600 text-lg whitespace-nowrap">Hello! I Am <span className="text-purple-600 font-bold">Abhishek Mehta</span></span>
+                  <svg className="w-12 h-12 text-slate-400 rotate-90 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                  </svg>
+                </div>
+
+                {/* Avatar Image */}
+                <div className="relative z-10">
+                  <img
+                    src="https://placehold.co/400x400/22d3ee/1e293b?text=Abby"
+                    alt="Abby Profile"
+                    className="w-32 h-32 md:w-40 md:h-40 rounded-3xl object-cover shadow-xl ring-4 ring-white/60"
+                  />
+                </div>
+              </div>
+
+              {/* Right Side Intro Text */}
+              <div className="text-center md:text-right max-w-xs">
+                <p className="text-slate-600 text-lg font-medium leading-snug">
+                  A <span className="text-slate-900 font-bold">Full-Stack Engineer</span> who builds systems that <span className="italic text-blue-600">scale</span> and <span className="italic text-blue-600">perform</span>.
+                </p>
+                <p className="text-slate-400 text-xs mt-2">
+                  Because if the code doesn't perform, what else can?
                 </p>
               </div>
+            </div>
 
-              <p className="text-slate-600 text-lg leading-relaxed">
-                Specialized in <span className="font-semibold text-slate-800">Cloud (AWS/Pulumi)</span> & <span className="font-semibold text-slate-800">Mobile</span>.
-                I build robust systems that generate revenue and drastically reduce debug time.
+            {/* Middle: Big Headline */}
+            <div className="text-center md:text-left mb-8">
+              <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                I'm a Software Engineer<span className="text-blue-500">.</span>
+              </h1>
+            </div>
+
+            {/* Sub-middle: Current Role */}
+            <div className="flex items-center justify-center md:justify-start gap-3 text-xl md:text-2xl text-slate-700 font-medium mb-10">
+              <span>Currently, I'm a Software Engineer at</span>
+              <div className="flex items-center gap-2 bg-white/60 px-4 py-1.5 rounded-full border border-blue-100 shadow-sm">
+                <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs font-bold">M</div>
+                <span className="text-blue-900 font-bold">Matrix AI</span>
+              </div>
+            </div>
+
+            {/* Bottom: Bio & Socials */}
+            <div className="max-w-2xl text-center md:text-left">
+              <p className="text-slate-600 text-lg leading-relaxed mb-6">
+                A specialized engineer functioning in the industry for 3+ years now.
+                I make meaningful and delightful digital products that create an equilibrium
+                between user needs and business goals.
               </p>
 
-              {/* Social Icons - Pill Design */}
-              <div className="flex items-center justify-center md:justify-start gap-4 pt-2">
-                <a
-                  href="https://github.com/Abby010"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center gap-2 bg-white/60 hover:bg-white/90 text-slate-700 hover:text-blue-600 px-5 py-2.5 rounded-full shadow-sm hover:shadow-md transition-all duration-300 border border-white/40"
-                >
-                  <Github size={18} className="group-hover:scale-110 transition-transform" />
-                  <span className="font-medium">GitHub</span>
+              {/* Social Icons */}
+              <div className="flex items-center justify-center md:justify-start gap-4">
+                <a href="https://github.com/Abby010" target="_blank" rel="noopener noreferrer" className="p-3 bg-white/50 hover:bg-white rounded-full text-slate-700 hover:text-black transition-all shadow-sm hover:shadow-md">
+                  <Github size={20} />
                 </a>
-                <a
-                  href="https://linkedin.com/in/yourprofile"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center gap-2 bg-white/60 hover:bg-white/90 text-slate-700 hover:text-blue-700 px-5 py-2.5 rounded-full shadow-sm hover:shadow-md transition-all duration-300 border border-white/40"
-                >
-                  <Linkedin size={18} className="group-hover:scale-110 transition-transform" />
-                  <span className="font-medium">LinkedIn</span>
+                <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" className="p-3 bg-white/50 hover:bg-white rounded-full text-slate-700 hover:text-blue-700 transition-all shadow-sm hover:shadow-md">
+                  <Linkedin size={20} />
                 </a>
-                <a
-                  href="mailto:your.email@example.com"
-                  className="group flex items-center gap-2 bg-white/60 hover:bg-white/90 text-slate-700 hover:text-cyan-600 px-5 py-2.5 rounded-full shadow-sm hover:shadow-md transition-all duration-300 border border-white/40"
-                >
-                  <Mail size={18} className="group-hover:scale-110 transition-transform" />
-                  <span className="font-medium">Email</span>
+                <a href="mailto:your.email@example.com" className="p-3 bg-white/50 hover:bg-white rounded-full text-slate-700 hover:text-red-500 transition-all shadow-sm hover:shadow-md">
+                  <Mail size={20} />
                 </a>
               </div>
             </div>
+
           </div>
         )
 
@@ -504,7 +525,7 @@ function PortfolioContainer() {
           className="h-full bg-gradient-to-r from-cyan-500 to-blue-600"
           initial={{ width: "0%" }}
           animate={{ width: "100%" }}
-          transition={{ duration: 15, ease: "linear" }}
+          transition={{ duration: currentDuration, ease: "linear" }}
         />
       </div>
     </div>
