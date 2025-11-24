@@ -114,8 +114,8 @@ export default function PortfolioContainer() {
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
                   className={`text-sm font-medium transition-colors ${currentPage === item.id
-                      ? 'text-blue-600 border-b-2 border-blue-600'
-                      : 'text-gray-600 hover:text-gray-900'
+                    ? 'text-blue-600 border-b-2 border-blue-600'
+                    : 'text-gray-600 hover:text-gray-900'
                     }`}
                 >
                   {item.label}
@@ -281,6 +281,62 @@ export default function PortfolioContainer() {
                       Download CV
                     </button>
                   </div>
+                </div>
+              </div>
+            </section>
+          </motion.div>
+        )}
+
+        {currentPage === 'education' && (
+          <motion.div
+            key="education"
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={{ duration: 0.5 }}
+          >
+            {/* Education Page */}
+            <section className="relative z-10 pt-20 pb-24 px-6">
+              <div className="max-w-6xl mx-auto">
+                <h2 className="text-5xl md:text-6xl font-black text-gray-900 text-center mb-16">
+                  EDUCATION
+                </h2>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                  {/* Education Card 1 */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2, duration: 0.6 }}
+                    className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow"
+                  >
+                    <p className="text-sm text-gray-600 font-medium mb-2">2028 - Present</p>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                      Bachelor of Science in Industrial Design
+                    </h3>
+                    <p className="text-gray-700 font-medium mb-2">ArtCenter College of Design</p>
+                    <p className="text-sm text-gray-600">
+                      Graduated with honors. Dean's List all semesters.
+                    </p>
+                  </motion.div>
+
+                  {/* Education Card 2 */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4, duration: 0.6 }}
+                    className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow"
+                  >
+                    <p className="text-sm text-gray-600 font-medium mb-2">2014 - 2019</p>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                      Associate of Arts in Fine Arts
+                    </h3>
+                    <p className="text-gray-700 font-medium mb-2">Community College</p>
+                    <p className="text-sm text-gray-600">
+                      Focused on digital illustration & 3D modeling.
+                    </p>
+                  </motion.div>
                 </div>
               </div>
             </section>
