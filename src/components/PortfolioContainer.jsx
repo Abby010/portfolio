@@ -1,535 +1,250 @@
-import { useState, useEffect, useRef } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Github, Linkedin, Mail, ArrowUpRight } from 'lucide-react'
-import RainBackground from './RainBackground'
+import { useState, useRef, useEffect } from 'react'
+import { motion, useMotionTemplate, useMotionValue, animate } from 'framer-motion'
+import { Github, Linkedin, Mail, ArrowUpRight, MapPin, Calendar } from 'lucide-react'
 
-const SECTIONS = [
-  {
-    id: 0,
-    title: "Software Engineer",
-    color: "text-blue-900",
-    duration: 5000 // 5 seconds for Profile
-  },
-  {
-    id: 1,
-    title: "Education",
-    color: "text-blue-900",
-    duration: 15000 // 15 seconds for others
-  },
-  {
-    id: 2,
-    title: "Experience",
-    color: "text-blue-900",
-    duration: 15000
-  },
-  {
-    id: 3,
-    title: "Community & Volunteering",
-    color: "text-blue-900",
-    duration: 15000
-  },
-  {
-    id: 4,
-    title: "Projects",
-    color: "text-blue-900",
-    duration: 15000
-  }
-]
+// --- Spotlight Component ---
+function Spotlight({ children, className = "" }) {
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
 
-function PortfolioContainer() {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [isWiping, setIsWiping] = useState(false)
-  const [isHovering, setIsHovering] = useState(false)
-  const [blinkVisible, setBlinkVisible] = useState(true)
-  const [fogOpacity, setFogOpacity] = useState(0)
-  const [progress, setProgress] = useState(0) // 0 to 1 based on current section duration
-
-  const rainRef = useRef(null)
-  const startTimeRef = useRef(Date.now())
-  const animationFrameRef = useRef()
-
-  const currentSection = SECTIONS[currentIndex]
-  const currentDuration = currentSection.duration
-
-  // Handle wiper animation and text switching
-  const handleWipe = async () => {
-    setIsWiping(true)
-
-    // Wait 900ms for wiper to reach center
-    await new Promise(resolve => setTimeout(resolve, 900))
-
-    // INSTANT CLEAN: Reset fog, progress, and clear droplets
-    setFogOpacity(0)
-    setProgress(0)
-    startTimeRef.current = Date.now() // Reset timer
-    if (rainRef.current) {
-      rainRef.current.clearDroplets()
-    }
-
-    // Switch the text while wiper is covering it
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % SECTIONS.length)
-
-    // Wait 900ms for wiper to finish moving right
-    await new Promise(resolve => setTimeout(resolve, 900))
-
-    setIsWiping(false)
-  }
-
-  // Timer Logic: Fog (0-1) and Progress (0-1) based on currentDuration
-  useEffect(() => {
-    const updateTimer = () => {
-      if (isHovering || isWiping) {
-        // Pause timer if hovering
-        startTimeRef.current = Date.now() - (progress * currentDuration)
-      } else {
-        const elapsed = Date.now() - startTimeRef.current
-        const newProgress = Math.min(elapsed / currentDuration, 1)
-
-        setProgress(newProgress)
-        setFogOpacity(newProgress) // Fog matches progress
-      }
-      animationFrameRef.current = requestAnimationFrame(updateTimer)
-    }
-
-    animationFrameRef.current = requestAnimationFrame(updateTimer)
-
-    return () => cancelAnimationFrame(animationFrameRef.current)
-  }, [isHovering, isWiping, progress, currentDuration])
-
-  // Auto-rotate sections based on currentDuration
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (!isHovering) {
-        console.log("Tick") // Debug log
-        handleWipe()
-      } else {
-        console.log("Paused - hovering")
-      }
-    }, currentDuration)
-
-    return () => clearTimeout(timeout)
-  }, [currentIndex, isHovering, currentDuration]) // Re-run when currentIndex changes to get new duration
-
-  // Blinking cursor effect for terminal
-  useEffect(() => {
-    const blinkInterval = setInterval(() => {
-      setBlinkVisible(prev => !prev)
-    }, 530)
-
-    return () => clearInterval(blinkInterval)
-  }, [])
-
-  // Helper to determine if a card should glow based on progress
-  const getCardGlowClass = (index) => {
-    // 4 cards, split 15s into 4 chunks (0-0.25, 0.25-0.5, etc.)
-    const start = index * 0.25
-    const end = (index + 1) * 0.25
-
-    // If progress is within this card's window
-    if (progress >= start && progress < end) {
-      return "shadow-[0_0_30px_rgba(34,211,238,0.6)] border-cyan-300 scale-105 bg-white/60"
-    }
-    return "shadow-sm border-white/50 scale-100 bg-white/40"
-  }
-
-  // Render layouts based on current index
-  const renderContent = () => {
-    switch (currentIndex) {
-      case 0: // Profile - Reference Layout Match
-        return (
-          <div className="flex flex-col w-full h-full justify-center px-4 md:px-12">
-
-            {/* Top Row: Avatar + Annotation & Intro Text */}
-            <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-8 mb-8">
-
-              {/* Avatar with Annotation */}
-              <div className="relative mt-8 md:mt-0">
-                {/* Annotation Arrow & Text */}
-                <div className="absolute -top-12 -right-20 md:-right-32 flex flex-col items-start transform rotate-6">
-                  <span className="font-handwriting text-slate-600 text-lg whitespace-nowrap">Hello! I Am <span className="text-purple-600 font-bold">Abhishek Mehta</span></span>
-                  <svg className="w-12 h-12 text-slate-400 rotate-90 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                  </svg>
-                </div>
-
-                {/* Avatar Image */}
-                <div className="relative z-10">
-                  <img
-                    src="https://placehold.co/400x400/22d3ee/1e293b?text=Abby"
-                    alt="Abby Profile"
-                    className="w-32 h-32 md:w-40 md:h-40 rounded-3xl object-cover shadow-xl ring-4 ring-white/60"
-                  />
-                </div>
-              </div>
-
-              {/* Right Side Intro Text */}
-              <div className="text-center md:text-right max-w-xs">
-                <p className="text-slate-600 text-lg font-medium leading-snug">
-                  A <span className="text-slate-900 font-bold">Full-Stack Engineer</span> who builds systems that <span className="italic text-blue-600">scale</span> and <span className="italic text-blue-600">perform</span>.
-                </p>
-                <p className="text-slate-400 text-xs mt-2">
-                  Because if the code doesn't perform, what else can?
-                </p>
-              </div>
-            </div>
-
-            {/* Middle: Big Headline */}
-            <div className="text-center md:text-left mb-8">
-              <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                I'm a Software Engineer<span className="text-blue-500">.</span>
-              </h1>
-            </div>
-
-            {/* Sub-middle: Current Role */}
-            <div className="flex items-center justify-center md:justify-start gap-3 text-xl md:text-2xl text-slate-700 font-medium mb-10">
-              <span>Currently, I'm a Software Engineer at</span>
-              <div className="flex items-center gap-2 bg-white/60 px-4 py-1.5 rounded-full border border-blue-100 shadow-sm">
-                <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs font-bold">M</div>
-                <span className="text-blue-900 font-bold">Matrix AI</span>
-              </div>
-            </div>
-
-            {/* Bottom: Bio & Socials */}
-            <div className="max-w-2xl text-center md:text-left">
-              <p className="text-slate-600 text-lg leading-relaxed mb-6">
-                A specialized engineer functioning in the industry for 3+ years now.
-                I make meaningful and delightful digital products that create an equilibrium
-                between user needs and business goals.
-              </p>
-
-              {/* Social Icons */}
-              <div className="flex items-center justify-center md:justify-start gap-4">
-                <a href="https://github.com/Abby010" target="_blank" rel="noopener noreferrer" className="p-3 bg-white/50 hover:bg-white rounded-full text-slate-700 hover:text-black transition-all shadow-sm hover:shadow-md">
-                  <Github size={20} />
-                </a>
-                <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" className="p-3 bg-white/50 hover:bg-white rounded-full text-slate-700 hover:text-blue-700 transition-all shadow-sm hover:shadow-md">
-                  <Linkedin size={20} />
-                </a>
-                <a href="mailto:your.email@example.com" className="p-3 bg-white/50 hover:bg-white rounded-full text-slate-700 hover:text-red-500 transition-all shadow-sm hover:shadow-md">
-                  <Mail size={20} />
-                </a>
-              </div>
-            </div>
-
-          </div>
-        )
-
-      case 1: // Education - Split Image Header
-        return (
-          <div className="w-full space-y-8">
-            <h1 className={`${currentSection.color} text-4xl font-bold text-center mb-6 tracking-tight`}>
-              Education
-            </h1>
-
-            {/* Top: Two Images Side by Side */}
-            <div className="grid grid-cols-2 gap-6 h-48 w-full mb-6">
-              <div className="overflow-hidden rounded-2xl h-full shadow-md group">
-                <img
-                  src="https://placehold.co/600x400/3b82f6/1e293b?text=Award+Moment"
-                  alt="Taking Award"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-              <div className="overflow-hidden rounded-2xl h-full shadow-md group">
-                <img
-                  src="https://placehold.co/600x400/3b82f6/1e293b?text=Team+Photo"
-                  alt="SafetyCulture Team"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-            </div>
-
-            {/* Bottom: Stats in 2-Column Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-              <div className="bg-white/50 rounded-2xl p-6 border border-white/60 shadow-sm hover:shadow-md transition-shadow">
-                <div className="text-5xl font-extrabold text-blue-900 mb-2">92.5%</div>
-                <div className="text-slate-800 font-bold text-lg">WAM Score</div>
-                <div className="text-slate-600 text-sm mt-1">Top 5% of Cohort</div>
-              </div>
-              <div className="bg-white/50 rounded-2xl p-6 border border-white/60 shadow-sm hover:shadow-md transition-shadow">
-                <div className="text-3xl font-extrabold text-blue-900 mb-2">Dean's Scholar</div>
-                <div className="text-slate-800 font-bold text-lg">Bachelor of Computer Science</div>
-                <div className="text-slate-600 text-sm mt-1">University of Wollongong</div>
-              </div>
-              <div className="bg-white/50 rounded-2xl p-6 border border-white/60 shadow-sm hover:shadow-md transition-shadow md:col-span-2">
-                <div className="text-2xl font-bold text-blue-900 mb-2">🏆 Academic Excellence Award</div>
-                <div className="text-slate-800 font-semibold">Human-Computer Interaction</div>
-                <div className="text-slate-600 text-sm mt-1">Top of class in HCI design and research</div>
-              </div>
-            </div>
-          </div>
-        )
-
-      case 2: // Experience - Electric Zig-Zag
-        return (
-          <div className="w-full relative">
-            <h1 className={`${currentSection.color} text-4xl font-bold text-center mb-10 tracking-tight`}>
-              Experience
-            </h1>
-
-            {/* SVG Wire Container */}
-            <div className="absolute inset-0 z-0 pointer-events-none">
-              <svg className="w-full h-full" preserveAspectRatio="none">
-                {/* 
-                  Path Logic:
-                  Start: 25% x, 12% y (Center of Card 1)
-                  Point 2: 75% x, 37% y (Center of Card 2)
-                  Point 3: 25% x, 62% y (Center of Card 3)
-                  End: 75% x, 87% y (Center of Card 4)
-                  (Approximate percentages based on 4 items stacked vertically)
-                */}
-                <defs>
-                  <path id="wirePath" d="M 25% 12% L 75% 37% L 25% 62% L 75% 87%" />
-                </defs>
-
-                {/* Base Line (Dashed) */}
-                <path
-                  d="M 25% 12% L 75% 37% L 25% 62% L 75% 87%"
-                  fill="none"
-                  stroke="rgba(255,255,255,0.3)"
-                  strokeWidth="2"
-                  strokeDasharray="5 5"
-                />
-
-                {/* Active Spark Line */}
-                <path
-                  d="M 25% 12% L 75% 37% L 25% 62% L 75% 87%"
-                  fill="none"
-                  stroke="#22d3ee" // Cyan-300
-                  strokeWidth="4"
-                  pathLength="1"
-                  strokeDasharray="1"
-                  strokeDashoffset={1 - progress} // Draws from 1 to 0
-                  className="drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]"
-                />
-              </svg>
-            </div>
-
-            {/* Zig-Zag Stack */}
-            <div className="flex flex-col gap-8 relative z-10">
-
-              {/* Item 1 (Left) */}
-              <div className={`w-[45%] self-start flex items-center gap-4 p-5 rounded-2xl border transition-all duration-500 ${getCardGlowClass(0)}`}>
-                <div className="flex-1 text-left">
-                  <h3 className="text-blue-900 font-bold text-xl">Matrix AI</h3>
-                  <p className="text-slate-700 text-sm font-semibold">Software Engineer</p>
-                </div>
-                <img
-                  src="https://placehold.co/100x100/2563eb/white?text=Matrix"
-                  alt="Matrix AI"
-                  className="w-14 h-14 rounded-xl object-contain flex-shrink-0 shadow-sm"
-                />
-              </div>
-
-              {/* Item 2 (Right) */}
-              <div className={`w-[45%] self-end flex items-center gap-4 p-5 rounded-2xl border transition-all duration-500 ${getCardGlowClass(1)}`}>
-                <img
-                  src="https://placehold.co/100x100/0ea5e9/white?text=SC"
-                  alt="SafetyCulture"
-                  className="w-14 h-14 rounded-xl object-contain flex-shrink-0 shadow-sm"
-                />
-                <div className="flex-1 text-left">
-                  <h3 className="text-blue-900 font-bold text-xl">SafetyCulture</h3>
-                  <p className="text-slate-700 text-sm font-semibold">Mobile Intern</p>
-                </div>
-              </div>
-
-              {/* Item 3 (Left) */}
-              <div className={`w-[45%] self-start flex items-center gap-4 p-5 rounded-2xl border transition-all duration-500 ${getCardGlowClass(2)}`}>
-                <div className="flex-1 text-left">
-                  <h3 className="text-blue-900 font-bold text-xl">Geo Pulse</h3>
-                  <p className="text-slate-700 text-sm font-semibold">Team Lead</p>
-                </div>
-                <img
-                  src="https://placehold.co/100x100/06b6d4/white?text=Pulse"
-                  alt="Geo Pulse"
-                  className="w-14 h-14 rounded-xl object-contain flex-shrink-0 shadow-sm"
-                />
-              </div>
-
-              {/* Item 4 (Right) */}
-              <div className={`w-[45%] self-end flex items-center gap-4 p-5 rounded-2xl border transition-all duration-500 ${getCardGlowClass(3)}`}>
-                <img
-                  src="https://placehold.co/100x100/0891b2/white?text=UOW"
-                  alt="UOW"
-                  className="w-14 h-14 rounded-xl object-contain flex-shrink-0 shadow-sm"
-                />
-                <div className="flex-1 text-left">
-                  <h3 className="text-blue-900 font-bold text-xl">UOW</h3>
-                  <p className="text-slate-700 text-sm font-semibold">C++ Tutor</p>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        )
-
-      case 3: // Volunteering - Gallery Layout
-        return (
-          <div className="w-full space-y-8">
-            <h1 className={`${currentSection.color} text-4xl font-bold text-center mb-6 tracking-tight`}>
-              Community & Volunteering
-            </h1>
-
-            {/* Top: 3 Portrait Images */}
-            <div className="grid grid-cols-3 gap-6">
-              <div className="overflow-hidden rounded-2xl shadow-md group">
-                <img
-                  src="https://placehold.co/150x200/10b981/1e293b?text=Vol+1"
-                  alt="Video Game Society"
-                  className="h-36 w-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-              <div className="overflow-hidden rounded-2xl shadow-md group">
-                <img
-                  src="https://placehold.co/150x200/14b8a6/1e293b?text=Vol+2"
-                  alt="Engineering Mentor"
-                  className="h-36 w-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-              <div className="overflow-hidden rounded-2xl shadow-md group">
-                <img
-                  src="https://placehold.co/150x200/06b6d4/1e293b?text=Vol+3"
-                  alt="UOW Pulse"
-                  className="h-36 w-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-            </div>
-
-            {/* Bottom: Text Descriptions */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-white/50 rounded-2xl p-6 border border-white/60 shadow-sm hover:shadow-md transition-all">
-                <h3 className="text-blue-900 font-bold text-lg">Video Game Society</h3>
-                <p className="text-slate-700 text-sm font-semibold mt-1">Executive - Well-Being Officer</p>
-                <p className="text-slate-600 text-sm mt-3 leading-relaxed">Fostering inclusive community for 200+ members</p>
-              </div>
-              <div className="bg-white/50 rounded-2xl p-6 border border-white/60 shadow-sm hover:shadow-md transition-all">
-                <h3 className="text-blue-900 font-bold text-lg">UOW Engineering</h3>
-                <p className="text-slate-700 text-sm font-semibold mt-1">Faculty Mentor</p>
-                <p className="text-slate-600 text-sm mt-3 leading-relaxed">Guiding first-year engineering students</p>
-              </div>
-              <div className="bg-white/50 rounded-2xl p-6 border border-white/60 shadow-sm hover:shadow-md transition-all">
-                <h3 className="text-blue-900 font-bold text-lg">UOW Pulse</h3>
-                <p className="text-slate-700 text-sm font-semibold mt-1">Campus Volunteer</p>
-                <p className="text-slate-600 text-sm mt-3 leading-relaxed">Supporting university events and culture</p>
-              </div>
-            </div>
-          </div>
-        )
-
-      case 4: // Projects - Terminal Aesthetic
-        return (
-          <div className="w-full">
-            <h1 className={`${currentSection.color} text-4xl font-bold text-center mb-8 tracking-tight`}>
-              Projects
-            </h1>
-
-            {/* Terminal Box */}
-            <div className="bg-slate-950 rounded-2xl p-8 border border-slate-800 font-mono text-left shadow-2xl relative overflow-hidden">
-              {/* Subtle Glow inside terminal */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 blur-[80px] rounded-full pointer-events-none"></div>
-
-              {/* Terminal Header */}
-              <div className="flex items-center gap-2 mb-6 pb-4 border-b border-slate-800">
-                <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                <span className="ml-4 text-slate-500 text-xs tracking-widest uppercase">terminal — projects</span>
-              </div>
-
-              {/* Terminal Content */}
-              <div className="space-y-3 text-cyan-300 text-sm md:text-base relative z-10">
-                <div className="flex items-center">
-                  <span className="text-green-400">➜</span>
-                  <span className="ml-2 text-blue-300">~/portfolio/projects</span>
-                </div>
-                <div className="text-white">
-                  <span className="text-cyan-400">$</span> ls -la
-                </div>
-                <div className="pl-4 text-slate-400 grid gap-1">
-                  <div>drwxr-xr-x  12 abby staff   384 Jan 15 2025 .</div>
-                  <div>drwxr-xr-x   8 abby staff   256 Jan 14 2025 ..</div>
-                </div>
-                <div className="text-white pt-4">
-                  <span className="text-cyan-400">$</span> npm run compile
-                </div>
-                <div className="pl-4 text-slate-300 grid gap-1">
-                  <div>&gt; Compiling latest projects...</div>
-                  <div>&gt; Optimizing portfolio showcase...</div>
-                  <div className="flex items-center mt-2 text-yellow-300">
-                    <span>&gt; Status: Coming Soon</span>
-                    {blinkVisible && <span className="ml-1 bg-yellow-300 w-2 h-5 inline-block"></span>}
-                  </div>
-                </div>
-                <div className="text-slate-600 text-xs pt-8 italic">
-                  // Featured projects will be deployed here soon
-                </div>
-              </div>
-            </div>
-          </div>
-        )
-
-      default:
-        return null
-    }
+  function handleMouseMove({ currentTarget, clientX, clientY }) {
+    const { left, top } = currentTarget.getBoundingClientRect()
+    mouseX.set(clientX - left)
+    mouseY.set(clientY - top)
   }
 
   return (
-    <div className="relative min-h-screen w-full bg-gradient-to-br from-sky-100 via-blue-50 to-sky-200 flex items-center justify-center overflow-hidden font-sans text-slate-900">
-      <RainBackground ref={rainRef} />
-
-      {/* Wiper - Animated squeegee effect */}
+    <div
+      className={`group relative border border-white/10 bg-white/5 overflow-hidden ${className}`}
+      onMouseMove={handleMouseMove}
+    >
       <motion.div
-        className="absolute top-0 z-[100] h-[120vh] w-32 backdrop-blur-xl flex items-center justify-center"
-        animate={isWiping ? { left: "120%" } : { left: "-20%" }}
-        transition={{ duration: 1.8, ease: "easeInOut" }}
-      >
-        <div className="h-full w-2 bg-slate-800" />
-      </motion.div>
-
-      {/* Main Content */}
-      <div className="relative z-10 px-4 md:px-8 w-full flex justify-center">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentIndex}
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 120, opacity: 0, rotate: -2 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
-            className={`relative overflow-hidden backdrop-blur-2xl border border-white/40 rounded-[2.5rem] p-10 md:p-16 w-full max-w-5xl mx-auto min-h-[600px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 flex items-center ${isHovering ? 'bg-white/60 shadow-[0_30px_80px_-15px_rgba(0,0,0,0.15)]' : 'bg-white/40'
-              }`}
-          >
-            {/* Inner Glow for Glass Effect */}
-            <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_40px_rgba(255,255,255,0.5)] rounded-[2.5rem] z-0"></div>
-
-            {/* Fog Layer - Overlay that gets opaque over time */}
-            <div
-              className="absolute inset-0 z-20 pointer-events-none bg-white/30 backdrop-blur-[2px] transition-opacity duration-300"
-              style={{ opacity: fogOpacity }}
-            />
-
-            {/* Content */}
-            <div className="relative z-10 w-full h-full flex flex-col justify-center">
-              {renderContent()}
-            </div>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      {/* Progress Bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 h-1.5 bg-slate-200">
-        <motion.div
-          key={currentIndex}
-          className="h-full bg-gradient-to-r from-cyan-500 to-blue-600"
-          initial={{ width: "0%" }}
-          animate={{ width: "100%" }}
-          transition={{ duration: currentDuration, ease: "linear" }}
-        />
-      </div>
+        className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100"
+        style={{
+          background: useMotionTemplate`
+            radial-gradient(
+              650px circle at ${mouseX}px ${mouseY}px,
+              rgba(255,255,255,0.1),
+              transparent 80%
+            )
+          `,
+        }}
+      />
+      <div className="relative h-full">{children}</div>
     </div>
   )
 }
 
-export default PortfolioContainer
+// --- Data ---
+const EXPERIENCE = [
+  {
+    id: 1,
+    company: "Matrix AI",
+    role: "Software Engineer",
+    period: "2023 - Present",
+    logo: "https://logo.clearbit.com/matrix.ai",
+    desc: "Building scalable cloud infrastructure and AI-driven solutions.",
+    tags: ["AWS", "Python", "React"]
+  },
+  {
+    id: 2,
+    company: "SafetyCulture",
+    role: "Mobile Intern",
+    period: "2022 - 2023",
+    logo: "https://logo.clearbit.com/safetyculture.com",
+    desc: "Optimized mobile app performance and reduced crash rates by 15%.",
+    tags: ["Kotlin", "Swift", "React Native"]
+  },
+  {
+    id: 3,
+    company: "UOW",
+    role: "C++ Tutor",
+    period: "2021 - 2022",
+    logo: "https://logo.clearbit.com/uow.edu.au",
+    desc: "Mentored 100+ students in object-oriented programming and algorithms.",
+    tags: ["C++", "Teaching"]
+  }
+]
+
+const PROJECTS = [
+  {
+    id: 1,
+    title: "Cloud Orchestrator",
+    desc: "Automated infrastructure provisioning tool using Pulumi & AWS.",
+    tags: ["Go", "AWS", "Pulumi"],
+    color: "from-blue-500 to-cyan-500"
+  },
+  {
+    id: 2,
+    title: "Geo Pulse",
+    desc: "Real-time location tracking and analytics platform for logistics.",
+    tags: ["React", "Node.js", "Socket.io"],
+    color: "from-purple-500 to-pink-500"
+  }
+]
+
+export default function PortfolioContainer() {
+  const [activeTab, setActiveTab] = useState('all')
+
+  return (
+    <div className="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-cyan-500/30">
+
+      {/* --- Hero Section --- */}
+      <section className="relative h-screen flex flex-col justify-center items-center px-6 overflow-hidden">
+        {/* Background Grid */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+
+        <div className="relative z-10 max-w-4xl w-full space-y-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-sm text-cyan-400 mb-6">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+              </span>
+              Available for new opportunities
+            </div>
+
+            <h1 className="text-6xl md:text-8xl font-bold tracking-tight text-white mb-6">
+              Building the future of <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">
+                Cloud & Mobile.
+              </span>
+            </h1>
+
+            <p className="text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
+              I'm <span className="text-white font-semibold">Abhishek Mehta</span>. A Full-Stack Engineer specialized in building robust, scalable systems that drive business growth.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 1 }}
+            className="flex justify-center gap-6 pt-4"
+          >
+            <a href="https://github.com/Abby010" className="text-slate-400 hover:text-white transition-colors"><Github size={24} /></a>
+            <a href="https://linkedin.com" className="text-slate-400 hover:text-white transition-colors"><Linkedin size={24} /></a>
+            <a href="mailto:email@example.com" className="text-slate-400 hover:text-white transition-colors"><Mail size={24} /></a>
+          </motion.div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <motion.div
+          className="absolute bottom-10 left-1/2 -translate-x-1/2"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+        >
+          <div className="w-6 h-10 border-2 border-slate-600 rounded-full flex justify-center p-2">
+            <div className="w-1 h-1 bg-cyan-400 rounded-full" />
+          </div>
+        </motion.div>
+      </section>
+
+      {/* --- Bento Grid Section --- */}
+      <section className="py-24 px-6 max-w-7xl mx-auto">
+        <div className="mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Experience & Projects</h2>
+          <div className="h-1 w-20 bg-cyan-500 rounded-full" />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[300px]">
+
+          {/* Profile Card (Large) */}
+          <Spotlight className="md:col-span-2 md:row-span-1 rounded-3xl p-8 flex flex-col justify-between bg-gradient-to-br from-slate-900 to-slate-800">
+            <div className="flex justify-between items-start">
+              <div>
+                <h3 className="text-2xl font-bold text-white">Abhishek Mehta</h3>
+                <p className="text-cyan-400">Software Engineer</p>
+              </div>
+              <img
+                src="https://placehold.co/400x400/22d3ee/1e293b?text=AM"
+                alt="Profile"
+                className="w-16 h-16 rounded-full border-2 border-white/10"
+              />
+            </div>
+            <div className="space-y-4">
+              <div className="flex items-center gap-3 text-slate-400">
+                <MapPin size={18} />
+                <span>Sydney, Australia</span>
+              </div>
+              <p className="text-slate-300 leading-relaxed">
+                Passionate about solving complex problems with clean, efficient code.
+                Always learning, always building.
+              </p>
+            </div>
+          </Spotlight>
+
+          {/* Education Card */}
+          <Spotlight className="md:col-span-1 md:row-span-1 rounded-3xl p-8 bg-slate-900 border-l-4 border-l-blue-500">
+            <div className="h-full flex flex-col justify-between">
+              <div>
+                <h3 className="text-xl font-bold text-white mb-1">UOW</h3>
+                <p className="text-sm text-slate-400">Bachelor of Comp Sci</p>
+              </div>
+              <div className="space-y-2">
+                <div className="text-4xl font-bold text-white">92.5%</div>
+                <div className="text-sm text-slate-400 uppercase tracking-wider">WAM Score</div>
+                <div className="inline-block bg-blue-500/20 text-blue-300 text-xs px-2 py-1 rounded mt-2">Dean's Scholar</div>
+              </div>
+            </div>
+          </Spotlight>
+
+          {/* Experience Cards */}
+          {EXPERIENCE.map((exp) => (
+            <Spotlight key={exp.id} className="md:col-span-1 rounded-3xl p-6 bg-slate-900 group">
+              <div className="flex items-center justify-between mb-6">
+                <div className="w-12 h-12 bg-white rounded-lg p-1 flex items-center justify-center overflow-hidden">
+                  <img src={exp.logo} alt={exp.company} className="w-full h-full object-contain" />
+                </div>
+                <span className="text-xs text-slate-500 font-mono">{exp.period}</span>
+              </div>
+              <h3 className="text-lg font-bold text-white mb-1 group-hover:text-cyan-400 transition-colors">{exp.company}</h3>
+              <p className="text-sm text-slate-400 mb-4">{exp.role}</p>
+              <p className="text-sm text-slate-300 line-clamp-3 mb-4">{exp.desc}</p>
+              <div className="flex flex-wrap gap-2 mt-auto">
+                {exp.tags.map(tag => (
+                  <span key={tag} className="text-[10px] bg-white/5 px-2 py-1 rounded text-slate-400 border border-white/5">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </Spotlight>
+          ))}
+
+          {/* Project Cards */}
+          {PROJECTS.map((project) => (
+            <Spotlight key={project.id} className="md:col-span-1 rounded-3xl p-0 overflow-hidden group">
+              <div className={`h-full w-full bg-gradient-to-br ${project.color} p-6 flex flex-col justify-between relative`}>
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500" />
+                <div className="relative z-10">
+                  <div className="flex justify-between items-start mb-4">
+                    <h3 className="text-xl font-bold text-white">{project.title}</h3>
+                    <ArrowUpRight className="text-white/70 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  </div>
+                  <p className="text-white/90 text-sm mb-4">{project.desc}</p>
+                </div>
+                <div className="relative z-10 flex flex-wrap gap-2">
+                  {project.tags.map(tag => (
+                    <span key={tag} className="text-[10px] bg-black/20 backdrop-blur-md px-2 py-1 rounded text-white border border-white/10">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </Spotlight>
+          ))}
+
+        </div>
+      </section>
+
+      {/* --- Footer --- */}
+      <footer className="py-12 text-center text-slate-600 text-sm">
+        <p>© {new Date().getFullYear()} Abhishek Mehta. Built with React & Framer Motion.</p>
+      </footer>
+    </div>
+  )
+}
