@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import RainBackground from './RainBackground'
 
 const SECTIONS = [
   {
@@ -28,8 +29,9 @@ function PortfolioContainer() {
   const [currentIndex, setCurrentIndex] = useState(0)
 
   return (
-    <div className="min-h-screen w-full bg-slate-900 flex items-center justify-center">
-      <div className="text-center px-8">
+    <div className="relative min-h-screen w-full bg-slate-900 flex items-center justify-center">
+      <RainBackground />
+      <div className="relative z-10 text-center px-8">
         <h1 className="text-white font-sans text-4xl font-bold mb-4">
           {SECTIONS[currentIndex].title}
         </h1>
