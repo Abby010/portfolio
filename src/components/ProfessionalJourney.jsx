@@ -241,7 +241,7 @@ export default function ProfessionalJourney() {
                     : 'bg-white/90 border-blue-400/40 hover:border-blue-600/60 shadow-lg'
                 }`}>
                   {/* Horizontal 2-column layout */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                     {/* Left Column - Header Info */}
                     <div className="flex flex-col">
                       <div className={`text-xs sm:text-sm font-bold mb-2 transition-colors duration-300 ${theme.accentBlue}`}>{exp.year}</div>
