@@ -144,7 +144,7 @@ export default function ProfessionalJourney() {
         style={{ zIndex: 1 }}
       />
 
-      <div className="max-w-6xl mx-auto relative pb-32" style={{ zIndex: 2 }}>
+      <div className="max-w-7xl mx-auto relative pb-32" style={{ zIndex: 2 }}>
         {/* Timeline with nodes */}
         <div className="relative flex flex-col items-center space-y-32 sm:space-y-48 md:space-y-64 lg:space-y-72">
           {/* Upward Arrow at the top of timeline */}
@@ -233,7 +233,7 @@ export default function ProfessionalJourney() {
                 initial={{ x: index % 2 === 0 ? -100 : 100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: index * 0.2 + 0.3, duration: 0.5 }}
-                className={`absolute top-0 ${index % 2 === 0 ? 'right-0 md:right-56' : 'left-0 md:left-56'} w-full max-w-[1000px] mt-40 sm:mt-48 md:mt-0 px-4 md:px-0`}
+                className={`absolute top-0 ${index % 2 === 0 ? 'right-0 md:right-80' : 'left-0 md:left-80'} w-full max-w-[1000px] mt-40 sm:mt-48 md:mt-0 px-4 md:px-0`}
               >
                 <div className={`backdrop-blur-md rounded-xl p-4 sm:p-5 md:p-6 border transition-all duration-300 ${
                   currentTheme === 'dark'
