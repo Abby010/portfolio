@@ -36,10 +36,10 @@ export default function PortfolioContainer() {
               <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-400 to-purple-600 rounded-lg flex items-center justify-center font-bold text-white text-xl sm:text-2xl">
                 AM
               </div>
-              <span className={`${theme.textPrimary} font-bold tracking-wider text-base sm:text-lg transition-colors duration-300 hidden sm:block`}>
+              <span className={`${theme.textPrimary} font-bold tracking-wider text-lg sm:text-xl transition-colors duration-300 hidden sm:block`}>
                 ABHISHEK MEHTA_SOFTWARE ENGINEER
               </span>
-              <span className={`${theme.textPrimary} font-bold tracking-wider text-base transition-colors duration-300 sm:hidden`}>
+              <span className={`${theme.textPrimary} font-bold tracking-wider text-lg transition-colors duration-300 sm:hidden`}>
                 A. MEHTA
               </span>
             </div>
@@ -51,7 +51,7 @@ export default function PortfolioContainer() {
                   <button
                     key={item}
                     onClick={() => setCurrentPage(item)}
-                    className={`px-6 py-4 rounded-lg text-base font-medium transition-all duration-300 ${
+                    className={`px-6 py-4 rounded-lg text-lg font-medium transition-all duration-300 ${
                       currentPage === item
                         ? currentTheme === 'dark' 
                           ? 'bg-blue-500/30 text-white shadow-lg shadow-blue-500/50'
@@ -214,7 +214,7 @@ export default function PortfolioContainer() {
                         setCurrentPage(item)
                         setMobileMenuOpen(false)
                       }}
-                      className={`w-full text-left px-8 py-6 rounded-lg text-lg font-medium transition-all duration-300 ${
+                      className={`w-full text-left px-8 py-6 rounded-lg text-xl font-medium transition-all duration-300 ${
                         currentPage === item
                           ? currentTheme === 'dark' 
                             ? 'bg-blue-500/30 text-white shadow-lg shadow-blue-500/50'
