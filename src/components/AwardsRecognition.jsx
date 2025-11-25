@@ -1,106 +1,74 @@
 import { motion } from 'framer-motion'
-import { Award, Trophy, Lightbulb, Target } from 'lucide-react'
-
-const AWARDS_DATA = [
-  {
-    id: 1,
-    title: 'Design Excellence Award',
-    description: 'Recognized for outstanding innovation in user experience design and creative problem-solving approaches.',
-    image: 'https://placehold.co/200x200/2563eb/white?text=Award+1',
-    icon: Trophy,
-    iconColor: 'text-yellow-500',
-    position: 'top-left',
-  },
-  {
-    id: 2,
-    title: 'Innovation in Design',
-    description: 'Celebrated for groundbreaking work in digital product design and forward-thinking design methodologies.',
-    image: 'https://placehold.co/200x200/0ea5e9/white?text=Award+2',
-    icon: Target,
-    iconColor: 'text-blue-400',
-    position: 'top-right',
-  },
-  {
-    id: 3,
-    title: 'Creative Achievement',
-    description: 'Honored for exceptional creativity and artistic vision in transforming complex ideas into elegant solutions.',
-    image: 'https://placehold.co/200x200/06b6d4/white?text=Award+3',
-    icon: Award,
-    iconColor: 'text-blue-400',
-    position: 'bottom-left',
-  },
-  {
-    id: 4,
-    title: 'Outstanding Contribution',
-    description: 'Acknowledged for significant contributions to the design community and mentorship of emerging talent.',
-    image: 'https://placehold.co/200x200/8b5cf6/white?text=Award+4',
-    icon: Lightbulb,
-    iconColor: 'text-yellow-500',
-    position: 'bottom-right',
-  },
-]
-
-const positionClasses = {
-  'top-left': 'md:top-20 md:left-20 top-10 left-10',
-  'top-right': 'md:top-20 md:right-20 top-10 right-10',
-  'bottom-left': 'md:bottom-20 md:left-20 bottom-10 left-10',
-  'bottom-right': 'md:bottom-20 md:right-20 bottom-10 right-10',
-}
 
 export default function AwardsRecognition() {
-  return (
-    <div className="relative w-full min-h-screen py-20 px-6">
-      <h2 className="text-5xl md:text-6xl font-black text-white text-center mb-20 drop-shadow-lg">
-        AWARDS & RECOGNITION
-      </h2>
+  const awards = [
+    { id: 1, title: "Dean's Merit List", year: '2023, 2024', icon: '🏆', x: 25, y: 20, description: 'Top 5% of undergraduate students' },
+    { id: 2, title: 'UOWx Leadership Award', year: '2024', icon: '⚡', x: 65, y: 25, description: 'Leadership and Communication skills' },
+    { id: 3, title: 'Academic Excellence Award', year: '2024', icon: '⭐', x: 45, y: 50, description: 'Highest score in CSIT226: HCI (~200 students)' },
+    { id: 4, title: "Dean's Scholar", year: '2022-2025', icon: '🎓', x: 20, y: 75, description: 'WAM: 92.5%' },
+    { id: 5, title: 'GeoPulse Capstone', year: '2025', icon: '🥈', x: 70, y: 70, description: '2nd place out of 40 groups' }
+  ]
 
-      {/* Awards Cards positioned in network layout */}
-      <div className="relative w-full min-h-[700px] max-w-7xl mx-auto">
-        {AWARDS_DATA.map((award, index) => {
-          const IconComponent = award.icon
-          
-          return (
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="min-h-screen py-20 px-6 relative"
+    >
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-5xl font-bold text-white text-center mb-16">Awards & Recognition</h2>
+
+        {/* Network Layout */}
+        <div className="relative h-[600px] w-full">
+          {/* Connection Lines */}
+          <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 1 }}>
+            {awards.map((award, i) => {
+              return awards.slice(i + 1).map((nextAward, j) => (
+                <motion.line
+                  key={`${i}-${j}`}
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  animate={{ pathLength: 1, opacity: 0.3 }}
+                  transition={{ duration: 1, delay: (i + j) * 0.1 }}
+                  x1={`${award.x}%`}
+                  y1={`${award.y}%`}
+                  x2={`${nextAward.x}%`}
+                  y2={`${nextAward.y}%`}
+                  stroke="rgba(96, 165, 250, 0.5)"
+                  strokeWidth="2"
+                  strokeDasharray="5,5"
+                />
+              ))
+            })}
+          </svg>
+
+          {/* Award Cards */}
+          {awards.map((award, index) => (
             <motion.div
               key={award.id}
-              className={`absolute ${positionClasses[award.position]} w-72 md:w-80`}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: index * 0.2, duration: 0.6 }}
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: index * 0.15, type: 'spring', stiffness: 200 }}
+              className="absolute"
+              style={{
+                left: `${award.x}%`,
+                top: `${award.y}%`,
+                transform: 'translate(-50%, -50%)',
+                zIndex: 2
+              }}
             >
-              <div className="bg-white/10 backdrop-blur-md rounded-3xl p-6 shadow-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105">
-                {/* Icon */}
-                <div className="flex justify-center mb-3">
-                  <div className={`${award.iconColor} drop-shadow-lg`}>
-                    <IconComponent size={40} strokeWidth={1.5} />
-                  </div>
-                </div>
-
-                {/* Profile Image */}
-                <div className="flex justify-center mb-4">
-                  <div className="w-28 h-28 rounded-full overflow-hidden border-4 border-white/40 shadow-2xl ring-2 ring-white/20">
-                    <img
-                      src={award.image}
-                      alt={award.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </div>
-
-                {/* Title */}
-                <h3 className="text-lg font-bold text-white text-center mb-3 drop-shadow-md">
-                  {award.title}
-                </h3>
-
-                {/* Description */}
-                <p className="text-xs text-white/70 text-center leading-relaxed drop-shadow-sm">
-                  {award.description}
-                </p>
+              <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md rounded-2xl p-6 border border-blue-500/30 hover:border-blue-400/60 hover:scale-105 transition-all duration-300 cursor-pointer shadow-2xl shadow-blue-500/20 w-64">
+                <div className="text-6xl mb-3 text-center">{award.icon}</div>
+                <h3 className="text-lg font-bold text-white text-center mb-2">{award.title}</h3>
+                <p className="text-blue-300 text-center text-sm font-semibold mb-2">{award.year}</p>
+                {award.description && (
+                  <p className="text-gray-300 text-center text-xs">{award.description}</p>
+                )}
               </div>
             </motion.div>
-          )
-        })}
+          ))}
+        </div>
       </div>
-    </div>
+    </motion.div>
   )
 }
-

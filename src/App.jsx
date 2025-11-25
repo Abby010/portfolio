@@ -1,17 +1,13 @@
+import { ThemeProvider } from './context/ThemeContext'
+import { ParticleProvider } from './context/ParticleContext'
 import PortfolioContainer from './components/PortfolioContainer'
 
-function App() {
-  try {
-    return <PortfolioContainer />
-  } catch (error) {
-    console.error('App Error:', error)
-    return (
-      <div style={{ padding: '20px', color: 'red' }}>
-        <h1>Error Loading App</h1>
-        <p>{error.message}</p>
-      </div>
-    )
-  }
+export default function App() {
+  return (
+    <ThemeProvider>
+      <ParticleProvider>
+        <PortfolioContainer />
+      </ParticleProvider>
+    </ThemeProvider>
+  )
 }
-
-export default App

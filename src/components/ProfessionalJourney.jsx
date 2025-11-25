@@ -1,66 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-
-const TIMELINE_DATA = [
-  {
-    id: 1,
-    year: '2018-2019',
-    title: 'Junior Designer',
-    description: 'Developed foundational design principles and practices',
-    image: 'https://placehold.co/300x200/2563eb/white?text=Junior+Designer',
-    xPercent: 0.15,
-    yOffset: 0,
-  },
-  {
-    id: 2,
-    year: '2019',
-    title: 'Product Designer',
-    description: 'Led product design initiatives and user experience improvements',
-    image: 'https://placehold.co/300x200/0ea5e9/white?text=Product+Designer',
-    xPercent: 0.4,
-    yOffset: -50,
-  },
-  {
-    id: 3,
-    year: '2019-2022',
-    title: 'Senior Product Designer',
-    description: 'Led cross-functional teams and established design systems',
-    image: 'https://placehold.co/300x200/06b6d4/white?text=Senior+Designer',
-    xPercent: 0.65,
-    yOffset: 0,
-  },
-  {
-    id: 4,
-    year: '2024',
-    title: 'Lead UI/UX Designer',
-    description: 'Leading design strategy and mentoring design teams',
-    image: 'https://placehold.co/300x200/8b5cf6/white?text=Lead+Designer',
-    xPercent: 0.9,
-    yOffset: -50,
-  },
-]
+import { useTheme } from '../context/ThemeContext'
 
 export default function ProfessionalJourney() {
-  const svgRef = useRef(null)
   const canvasRef = useRef(null)
-  const containerRef = useRef(null)
-  const [dimensions, setDimensions] = useState({ width: 1200, height: 200 })
+  const [isLightning, setIsLightning] = useState(false)
+  const { theme, currentTheme } = useTheme()
 
-  useEffect(() => {
-    const updateDimensions = () => {
-      if (containerRef.current) {
-        setDimensions({
-          width: containerRef.current.offsetWidth,
-          height: 200,
-        })
-      }
-    }
-
-    updateDimensions()
-    window.addEventListener('resize', updateDimensions)
-    return () => window.removeEventListener('resize', updateDimensions)
-  }, [])
-
+  // Thunder effect
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -69,195 +16,260 @@ export default function ProfessionalJourney() {
     let animationFrameId
 
     const resizeCanvas = () => {
-      if (containerRef.current) {
-        canvas.width = containerRef.current.offsetWidth
-        canvas.height = 200
-      }
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
     }
     resizeCanvas()
     window.addEventListener('resize', resizeCanvas)
 
-    // Lightning effect animation
-    const animate = () => {
+    const drawLightning = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
+      
+      // Draw the main path line
+      ctx.beginPath()
+      ctx.strokeStyle = currentTheme === 'dark' ? 'rgba(96, 165, 250, 0.3)' : 'rgba(37, 99, 235, 0.3)'
+      ctx.lineWidth = 2
+      ctx.setLineDash([10, 5])
+      
+      const centerX = canvas.width / 2
+      const startY = 280
+      const spacing = 608
+      
+      for (let i = 0; i < 3; i++) {
+        const y = startY + (i * spacing)
+        ctx.moveTo(centerX, y)
+        ctx.lineTo(centerX, y + spacing)
+      }
+      ctx.stroke()
+      ctx.setLineDash([])
 
-      const svg = svgRef.current
-      if (svg) {
-        const path = svg.querySelector('path')
-        if (path) {
-          const pathLength = path.getTotalLength()
-          const numBolts = 2
-          
-          for (let i = 0; i < numBolts; i++) {
-            const offset = (Date.now() * 0.002 + i * 0.3) % 1
-            const point = path.getPointAtLength(pathLength * offset)
-            
-            // Draw lightning bolt with glow
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)'
-            ctx.lineWidth = 3
-            ctx.shadowBlur = 15
-            ctx.shadowColor = 'rgba(147, 197, 253, 1)'
-            
-            ctx.beginPath()
-            
-            // Create zigzag lightning pattern
-            const segments = 8
-            let currentX = point.x
-            let currentY = point.y
-            
-            ctx.moveTo(currentX, currentY)
-            
-            for (let j = 0; j < segments; j++) {
-              const angle = Math.atan2(
-                path.getPointAtLength(pathLength * (offset + 0.01)).y - currentY,
-                path.getPointAtLength(pathLength * (offset + 0.01)).x - currentX
-              )
-              const length = 12 + Math.random() * 8
-              const nextX = currentX + Math.cos(angle) * length + (Math.random() - 0.5) * 15
-              const nextY = currentY + Math.sin(angle) * length + (Math.random() - 0.5) * 10
-              
-              ctx.lineTo(nextX, nextY)
-              currentX = nextX
-              currentY = nextY
-            }
-            
-            ctx.stroke()
-            ctx.shadowBlur = 0
-          }
+      // Animated lightning bolt
+      const time = Date.now() / 1000
+      const shouldLightning = Math.sin(time * 2) > 0.9
+      
+      if (shouldLightning) {
+        setIsLightning(true)
+        ctx.strokeStyle = currentTheme === 'dark' ? 'rgba(96, 165, 250, 0.8)' : 'rgba(37, 99, 235, 0.8)'
+        ctx.lineWidth = 3
+        ctx.shadowBlur = 15
+        ctx.shadowColor = currentTheme === 'dark' ? 'rgba(96, 165, 250, 1)' : 'rgba(37, 99, 235, 1)'
+        
+        ctx.beginPath()
+        ctx.moveTo(centerX, startY)
+        for (let i = 0; i < 4; i++) {
+          const y = startY + (i * spacing)
+          const offset = (Math.random() - 0.5) * 30
+          ctx.lineTo(centerX + offset, y)
         }
+        ctx.stroke()
+        ctx.shadowBlur = 0
+      } else {
+        setIsLightning(false)
       }
 
-      animationFrameId = requestAnimationFrame(animate)
+      animationFrameId = requestAnimationFrame(drawLightning)
     }
 
-    animate()
+    drawLightning()
 
     return () => {
       window.removeEventListener('resize', resizeCanvas)
       cancelAnimationFrame(animationFrameId)
     }
-  }, [dimensions])
+  }, [currentTheme])
 
-  // Create zigzag path based on node positions
-  const createPath = () => {
-    const baseY = 100
-    const points = TIMELINE_DATA.map((item, index) => {
-      const x = dimensions.width * item.xPercent
-      const y = baseY + item.yOffset
-      return { x, y }
-    })
-
-    if (points.length < 2) return ''
-
-    let path = `M ${points[0].x} ${points[0].y}`
-    for (let i = 1; i < points.length; i++) {
-      path += ` L ${points[i].x} ${points[i].y}`
+  const experiences = [
+    {
+      year: 'July 2025 - December 2025',
+      title: 'C++ Advanced Programming Tutor — CSCI251',
+      company: 'University of Wollongong',
+      location: 'Wollongong, NSW',
+      points: [
+        'Conducted code reviews and proof-read assignment submissions to ensure correctness, clarity, and adherence to C++ best practices',
+        { text: 'Delivered bi-weekly tutorials for a cohort of ', highlight: '37', rest: ' students, supporting their understanding of advanced C++ concepts' },
+        'Assisted with final exam marking, evaluating solutions for accuracy, logic, and implementation quality'
+      ],
+      logo: '/UOW LOGO.png'
+    },
+    {
+      year: 'March 2025 - November 2025',
+      title: 'Team Lead — GeoPulse (SafetyCulture × UOW Capstone)',
+      company: 'SafetyCulture',
+      location: 'Wollongong, NSW',
+      points: [
+        { text: 'Led a ', highlight: '5-member', rest: ' capstone project team, coordinating tasks, planning sprints, and maintaining delivery timelines' },
+        'Performed code reviews, design reviews, and documentation reviews to ensure quality and consistency across the project',
+        'Engaged with multiple stakeholders, managing expectations and presenting progress updates throughout the development cycle',
+        { text: 'Achieved ', highlight: '2nd place', rest: ' out of ', highlight2: '40 groups', rest2: ', recognised for strong technical execution and effective team leadership' }
+      ],
+      logo: '/SC logo.webp'
+    },
+    {
+      year: 'February 2025 - May 2025',
+      title: 'Software Engineer (Infrastructure)',
+      company: 'Matrix AI',
+      location: 'Sydney, NSW',
+      points: [
+        'Designed a distributed tracing prototype with Jaeger and built a TUI-based visualizer (React Ink, TypeScript)',
+        { text: 'Achieved ', highlight: '85%', rest: ' trace visibility and reduced debugging time by ', highlight2: '40%', rest2: ' through enhanced observability and debugging tools' },
+        'Validated AWS infrastructure changes using Pulumi previews and automated tests to ensure safe deployments'
+      ],
+      logo: '/Matrix AI.png'
+    },
+    {
+      year: 'December 2024 - February 2025',
+      title: 'Software Engineer Intern',
+      company: 'SafetyCulture',
+      location: 'Sydney, NSW',
+      points: [
+        'Successfully integrated the Elcometer sensor into the Android and iOS app, enhancing functionality and increasing app usage',
+        { text: 'Resulted in ', highlight: '350', rest: ' additional premium seats and ', highlight2: 'AUD 100K', rest2: ' in annual revenue' },
+        'Actively participated in Code Care Week, effectively resolving multiple backlog tickets'
+      ],
+      logo: '/SC logo.webp'
     }
-    return path
-  }
+  ]
 
   return (
-    <div className="relative w-full py-20 px-6">
-      <h2 className="text-5xl md:text-6xl font-black text-gray-900 text-center mb-20">
-        PROFESSIONAL JOURNEY
-      </h2>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="h-screen overflow-y-auto pt-32 pb-32 px-6 relative"
+    >
+      {/* Canvas for lightning effect */}
+      <canvas
+        ref={canvasRef}
+        className="fixed inset-0 pointer-events-none"
+        style={{ zIndex: 1 }}
+      />
 
-      {/* SVG Path for timeline */}
-      <div ref={containerRef} className="relative w-full h-64 mb-32">
-        <svg
-          ref={svgRef}
-          className="absolute top-0 left-0 w-full h-full"
-          style={{ overflow: 'visible' }}
-        >
-          <motion.path
-            d={createPath()}
-            fill="none"
-            stroke="#93c5fd"
-            strokeWidth="4"
-            strokeLinecap="round"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 2, ease: "easeInOut" }}
-          />
-        </svg>
-
-        {/* Lightning effect overlay */}
-        <canvas
-          ref={canvasRef}
-          className="absolute top-0 left-0 w-full h-full pointer-events-none"
-          style={{ zIndex: 1 }}
-        />
-
-        {/* Timeline Nodes */}
-        {TIMELINE_DATA.map((item, index) => {
-          const baseY = 100
-          const nodeY = baseY + item.yOffset
-          
-          return (
+      <div className="max-w-6xl mx-auto relative pb-32" style={{ zIndex: 2 }}>
+        {/* Timeline with nodes */}
+        <div className="relative flex flex-col items-center space-y-72">
+          {/* Upward Arrow at the top of timeline */}
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="flex flex-col items-center mb-8"
+          >
+            <motion.svg 
+              className={`w-32 h-32 transition-all duration-300 ${
+                currentTheme === 'dark'
+                  ? isLightning 
+                    ? 'text-blue-300 drop-shadow-[0_0_25px_rgba(96,165,250,1)]' 
+                    : 'text-blue-400'
+                  : isLightning 
+                    ? 'text-blue-600 drop-shadow-[0_0_25px_rgba(37,99,235,1)]' 
+                    : 'text-blue-700'
+              }`}
+              animate={isLightning ? {
+                filter: [
+                  'drop-shadow(0 0 25px rgba(96,165,250,1))',
+                  'drop-shadow(0 0 35px rgba(96,165,250,1))',
+                  'drop-shadow(0 0 25px rgba(96,165,250,1))'
+                ]
+              } : {}}
+              transition={{ duration: 0.2, repeat: isLightning ? 2 : 0 }}
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+              strokeWidth={isLightning ? 3.5 : 2.5}
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                d="M5 10l7-7m0 0l7 7m-7-7v18" 
+              />
+            </motion.svg>
+            <motion.div 
+              className={`w-2 h-24 mt-2 transition-all duration-300 ${
+                currentTheme === 'dark' 
+                  ? 'bg-gradient-to-b from-blue-400 to-transparent' 
+                  : 'bg-gradient-to-b from-blue-700 to-transparent'
+              } ${
+                isLightning ? (currentTheme === 'dark' ? 'shadow-[0_0_20px_rgba(96,165,250,1)]' : 'shadow-[0_0_20px_rgba(37,99,235,1)]') : ''
+              }`}
+              animate={isLightning ? {
+                opacity: [0.8, 1, 0.8],
+                scaleY: [1, 1.1, 1]
+              } : {}}
+              transition={{ duration: 0.2 }}
+            />
+          </motion.div>
+          {experiences.map((exp, index) => (
             <motion.div
-              key={item.id}
-              className="absolute"
-              style={{
-                left: `${item.xPercent * 100}%`,
-                top: nodeY - 20,
-                transform: 'translateX(-50%)',
-                zIndex: 10,
-              }}
+              key={index}
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: index * 0.3, duration: 0.5 }}
+              transition={{ delay: index * 0.2, duration: 0.5 }}
+              className="relative"
             >
-              {/* Node Circle with Image */}
-              <div className="relative">
-                <div className="w-16 h-16 rounded-full border-4 border-white shadow-xl overflow-hidden bg-white">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                
-                {/* Year Label */}
-                <div className="absolute top-20 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
-                  <span className="text-sm font-bold text-gray-700 bg-white px-2 py-1 rounded shadow">
-                    {item.year}
-                  </span>
-                </div>
+              {/* Node Circle with Logo */}
+              <div className={`w-48 h-48 bg-white rounded-full flex items-center justify-center shadow-2xl border-4 p-5 overflow-hidden transition-all duration-300 ${
+                currentTheme === 'dark' 
+                  ? 'shadow-blue-500/50 border-blue-400/30' 
+                  : 'shadow-blue-400/40 border-blue-500/40'
+              }`}>
+                <img 
+                  src={exp.logo} 
+                  alt={exp.company}
+                  className="w-full h-full object-contain"
+                  style={{ 
+                    transform: exp.company === 'SafetyCulture' 
+                      ? 'scale(2.25)' 
+                      : exp.company === 'Matrix AI' 
+                      ? 'scale(1.35)' 
+                      : exp.company === 'University of Wollongong'
+                      ? 'scale(1.26)'
+                      : 'scale(1)' 
+                  }}
+                />
               </div>
-            </motion.div>
-          )
-        })}
-      </div>
 
-      {/* Content Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-        {TIMELINE_DATA.map((item, index) => (
-          <motion.div
-            key={item.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.2 + 0.5, duration: 0.6 }}
-            className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
-          >
-            <div className="relative h-48 overflow-hidden">
-              <img
-                src={item.image}
-                alt={item.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="p-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-2">
-                {item.year}: {item.title}
-              </h3>
-              <p className="text-sm text-gray-600">
-                {item.description}
-              </p>
-            </div>
-          </motion.div>
-        ))}
+              {/* Content Card */}
+              <motion.div
+                initial={{ x: index % 2 === 0 ? -100 : 100, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: index * 0.2 + 0.3, duration: 0.5 }}
+                className={`absolute top-0 ${index % 2 === 0 ? 'right-56' : 'left-56'} w-[500px]`}
+              >
+                <div className={`backdrop-blur-md rounded-xl p-6 border transition-all duration-300 ${
+                  currentTheme === 'dark'
+                    ? 'bg-white/10 border-blue-500/30 hover:border-blue-400/50'
+                    : 'bg-white/90 border-blue-400/40 hover:border-blue-600/60 shadow-lg'
+                }`}>
+                  <div className={`text-sm font-bold mb-2 transition-colors duration-300 ${theme.accentBlue}`}>{exp.year}</div>
+                  <h3 className={`text-2xl font-bold mb-1 transition-colors duration-300 ${theme.textPrimary}`}>{exp.title}</h3>
+                  <p className={`font-semibold mb-1 transition-colors duration-300 ${theme.accentPurple}`}>{exp.company}</p>
+                  <p className={`text-sm mb-3 transition-colors duration-300 ${theme.textTertiary}`}>{exp.location}</p>
+                  <ul className={`leading-relaxed space-y-2 transition-colors duration-300 ${theme.textSecondary}`}>
+                    {exp.points.map((point, idx) => (
+                      <li key={idx} className="flex items-start">
+                        <span className={`mr-2 mt-1 transition-colors duration-300 ${theme.accentBlue}`}>•</span>
+                        <span>
+                          {typeof point === 'string' ? (
+                            point
+                          ) : (
+                            <>
+                              {point.text}
+                              <span className={`font-bold transition-colors duration-300 ${theme.accentBlue}`}>{point.highlight}</span>
+                              {point.rest}
+                              <span className={`font-bold transition-colors duration-300 ${theme.accentBlue}`}>{point.highlight2}</span>
+                              {point.rest2}
+                            </>
+                          )}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+            </motion.div>
+          ))}
+        </div>
       </div>
-    </div>
+    </motion.div>
   )
 }
-
