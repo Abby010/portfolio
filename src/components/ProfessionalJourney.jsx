@@ -240,30 +240,40 @@ export default function ProfessionalJourney() {
                     ? 'bg-white/10 border-blue-500/30 hover:border-blue-400/50'
                     : 'bg-white/90 border-blue-400/40 hover:border-blue-600/60 shadow-lg'
                 }`}>
-                  <div className={`text-xs sm:text-sm font-bold mb-2 transition-colors duration-300 ${theme.accentBlue}`}>{exp.year}</div>
-                  <h3 className={`text-lg sm:text-xl md:text-2xl font-bold mb-1 transition-colors duration-300 ${theme.textPrimary}`}>{exp.title}</h3>
-                  <p className={`font-semibold mb-1 text-sm sm:text-base transition-colors duration-300 ${theme.accentPurple}`}>{exp.company}</p>
-                  <p className={`text-xs sm:text-sm mb-3 transition-colors duration-300 ${theme.textTertiary}`}>{exp.location}</p>
-                  <ul className={`leading-relaxed space-y-1.5 sm:space-y-2 transition-colors duration-300 ${theme.textSecondary} text-sm sm:text-base`}>
-                    {exp.points.map((point, idx) => (
-                      <li key={idx} className="flex items-start">
-                        <span className={`mr-2 mt-1 transition-colors duration-300 ${theme.accentBlue}`}>•</span>
-                        <span>
-                          {typeof point === 'string' ? (
-                            point
-                          ) : (
-                            <>
-                              {point.text}
-                              <span className={`font-bold transition-colors duration-300 ${theme.accentBlue}`}>{point.highlight}</span>
-                              {point.rest}
-                              <span className={`font-bold transition-colors duration-300 ${theme.accentBlue}`}>{point.highlight2}</span>
-                              {point.rest2}
-                            </>
-                          )}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
+                  {/* Horizontal 2-column layout */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                    {/* Left Column - Header Info */}
+                    <div className="flex flex-col">
+                      <div className={`text-xs sm:text-sm font-bold mb-2 transition-colors duration-300 ${theme.accentBlue}`}>{exp.year}</div>
+                      <h3 className={`text-lg sm:text-xl md:text-2xl font-bold mb-1 transition-colors duration-300 ${theme.textPrimary}`}>{exp.title}</h3>
+                      <p className={`font-semibold mb-1 text-sm sm:text-base transition-colors duration-300 ${theme.accentPurple}`}>{exp.company}</p>
+                      <p className={`text-xs sm:text-sm transition-colors duration-300 ${theme.textTertiary}`}>{exp.location}</p>
+                    </div>
+                    
+                    {/* Right Column - Bullet Points */}
+                    <div className="flex flex-col">
+                      <ul className={`leading-relaxed space-y-1.5 sm:space-y-2 transition-colors duration-300 ${theme.textSecondary} text-sm sm:text-base`}>
+                        {exp.points.map((point, idx) => (
+                          <li key={idx} className="flex items-start">
+                            <span className={`mr-2 mt-1 transition-colors duration-300 ${theme.accentBlue}`}>•</span>
+                            <span>
+                              {typeof point === 'string' ? (
+                                point
+                              ) : (
+                                <>
+                                  {point.text}
+                                  <span className={`font-bold transition-colors duration-300 ${theme.accentBlue}`}>{point.highlight}</span>
+                                  {point.rest}
+                                  <span className={`font-bold transition-colors duration-300 ${theme.accentBlue}`}>{point.highlight2}</span>
+                                  {point.rest2}
+                                </>
+                              )}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             </motion.div>
