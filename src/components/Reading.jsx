@@ -132,7 +132,7 @@ export default function Reading() {
 
       <div className="max-w-7xl mx-auto relative pb-20" style={{ zIndex: 2 }}>
         {/* Timeline with book nodes */}
-        <div className="relative flex flex-col items-center space-y-32 sm:space-y-48 md:space-y-64 lg:space-y-80">
+        <div className="relative flex flex-col items-center space-y-20 sm:space-y-28 md:space-y-36 lg:space-y-44">
           {/* Upward Arrow at the top of timeline */}
           <motion.div
             initial={{ y: 20, opacity: 0 }}
@@ -195,7 +195,7 @@ export default function Reading() {
               className="relative flex flex-col items-center"
             >
               {/* Book Cover Node */}
-              <div className={`w-48 h-[280px] sm:w-64 sm:h-[360px] md:w-80 md:h-[450px] rounded-2xl flex items-center justify-center shadow-2xl border-4 p-2 sm:p-3 overflow-hidden ${
+              <div className={`w-44 h-[240px] sm:w-56 sm:h-[312px] md:w-64 md:h-[384px] rounded-2xl flex items-center justify-center shadow-2xl border-4 p-2 sm:p-3 overflow-hidden ${
                 currentTheme === 'dark'
                   ? 'bg-white shadow-blue-500/50 border-blue-400/30'
                   : 'bg-white shadow-blue-400/60 border-blue-500/50'
@@ -212,46 +212,41 @@ export default function Reading() {
                 initial={{ y: 50, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: index * 0.2 + 0.3, duration: 0.5 }}
-                className="relative mt-8 flex justify-center px-4"
+                className="relative mt-6 flex justify-center px-4"
               >
-                <div className={`backdrop-blur-lg rounded-lg p-3 sm:p-4 md:p-5 border transition-all duration-300 shadow-lg w-full max-w-[600px] ${
+                <div className={`backdrop-blur-lg rounded-lg p-2 sm:p-3 md:p-4 border transition-all duration-300 shadow-lg w-full max-w-[700px] md:max-w-[800px] ${
                   currentTheme === 'dark'
                     ? 'bg-white/20 border-blue-500/40 hover:border-blue-400/60'
                     : 'bg-white/95 border-gray-300 hover:border-blue-500'
                 }`}>
-                  <div className={`inline-block px-2 py-1 sm:px-3 rounded-full text-xs sm:text-sm font-bold mb-2 sm:mb-3 ${
+                  <div className={`inline-block px-2 py-0.5 sm:px-2.5 rounded-full text-xs sm:text-sm font-bold mb-1 sm:mb-2 ${
                     currentTheme === 'dark'
                       ? 'bg-purple-500/40 text-purple-200'
                       : 'bg-purple-200 text-purple-800'
                   }`}>
                     {book.category}
                   </div>
-                  <h3 className={`text-base sm:text-lg md:text-xl font-bold mb-2 drop-shadow-lg ${
+                  <h3 className={`text-base sm:text-xl md:text-2xl font-bold mb-1 sm:mb-2 drop-shadow-lg ${
                     currentTheme === 'dark' ? 'text-white' : 'text-gray-900'
                   }`}>{book.title}</h3>
-                  <p className={`font-semibold mb-2 sm:mb-3 text-xs sm:text-sm drop-shadow-md ${
+                  <p className={`font-semibold mb-1 sm:mb-2 text-xs sm:text-sm drop-shadow-md ${
                     currentTheme === 'dark' ? 'text-blue-300' : 'text-blue-700'
                   }`}>by {book.author}</p>
                   
                   {/* Quote Section */}
-                  <div className={`rounded-md p-2 sm:p-3 border-l-4 ${
+                  <div className={`rounded-md p-2 sm:p-2.5 border-l-4 ${
                     currentTheme === 'dark'
                       ? 'bg-black/50 border-purple-400'
                       : 'bg-gray-100 border-purple-600'
                   }`}>
-                    <p className={`text-xs sm:text-sm mb-1 sm:mb-2 italic font-semibold ${
+                    <p className={`text-xs sm:text-sm mb-1 italic font-semibold ${
                       currentTheme === 'dark' ? 'text-gray-300' : 'text-gray-600'
                     }`}>Quote:</p>
-                    <p className={`leading-relaxed italic text-xs sm:text-sm ${
+                    <p className={`leading-relaxed italic text-base sm:text-lg md:text-xl lg:text-2xl ${
                       currentTheme === 'dark' ? 'text-gray-100' : 'text-gray-800'
                     }`}>
                       "{book.quote}"
                     </p>
-                  </div>
-
-                  {/* Rating */}
-                  <div className="mt-2 sm:mt-3 flex items-center space-x-1">
-                    <span className="text-yellow-400 text-sm sm:text-base">⭐⭐⭐⭐⭐</span>
                   </div>
                 </div>
               </motion.div>
