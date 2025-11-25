@@ -121,7 +121,7 @@ export default function Reading() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="h-screen overflow-y-auto pt-32 pb-20 px-6 relative"
+      className="h-screen overflow-y-auto pt-20 sm:pt-32 pb-20 px-4 sm:px-6 relative"
     >
       {/* Canvas for timeline effect */}
       <canvas
@@ -132,7 +132,7 @@ export default function Reading() {
 
       <div className="max-w-7xl mx-auto relative pb-20" style={{ zIndex: 2 }}>
         {/* Timeline with book nodes */}
-        <div className="relative flex flex-col items-center space-y-80">
+        <div className="relative flex flex-col items-center space-y-32 sm:space-y-48 md:space-y-64 lg:space-y-80">
           {/* Upward Arrow at the top of timeline */}
           <motion.div
             initial={{ y: 20, opacity: 0 }}
@@ -141,7 +141,7 @@ export default function Reading() {
             className="flex flex-col items-center mb-8"
           >
             <motion.svg 
-              className={`w-32 h-32 transition-all duration-200 ${
+              className={`w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 transition-all duration-200 ${
                 isLightning 
                   ? currentTheme === 'dark' 
                     ? 'text-blue-300 drop-shadow-[0_0_25px_rgba(96,165,250,1)]'
@@ -168,7 +168,7 @@ export default function Reading() {
               />
             </motion.svg>
             <motion.div 
-              className={`w-2 h-24 mt-2 transition-all duration-200 ${
+              className={`w-2 h-12 sm:h-16 md:h-24 mt-2 transition-all duration-200 ${
                 currentTheme === 'dark' 
                   ? 'bg-gradient-to-b from-blue-400 to-transparent' 
                   : 'bg-gradient-to-b from-blue-500 to-transparent'
@@ -195,7 +195,7 @@ export default function Reading() {
               className="relative"
             >
               {/* Book Cover Node */}
-              <div className={`w-80 h-[450px] rounded-2xl flex items-center justify-center shadow-2xl border-4 p-3 overflow-hidden ${
+              <div className={`w-48 h-[280px] sm:w-64 sm:h-[360px] md:w-80 md:h-[450px] rounded-2xl flex items-center justify-center shadow-2xl border-4 p-2 sm:p-3 overflow-hidden ${
                 currentTheme === 'dark'
                   ? 'bg-white shadow-blue-500/50 border-blue-400/30'
                   : 'bg-white shadow-blue-400/60 border-blue-500/50'
@@ -212,37 +212,37 @@ export default function Reading() {
                 initial={{ x: index % 2 === 0 ? -100 : 100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: index * 0.2 + 0.3, duration: 0.5 }}
-                className={`absolute top-0 ${index % 2 === 0 ? 'right-96' : 'left-96'} w-[390px]`}
+                className={`absolute top-0 ${index % 2 === 0 ? 'right-0 md:right-96' : 'left-0 md:left-96'} w-full max-w-[390px] mt-56 sm:mt-72 md:mt-0 px-4 md:px-0`}
               >
-                <div className={`backdrop-blur-lg rounded-lg p-5 border transition-all duration-300 shadow-lg ${
+                <div className={`backdrop-blur-lg rounded-lg p-3 sm:p-4 md:p-5 border transition-all duration-300 shadow-lg ${
                   currentTheme === 'dark'
                     ? 'bg-white/20 border-blue-500/40 hover:border-blue-400/60'
                     : 'bg-white/95 border-gray-300 hover:border-blue-500'
                 }`}>
-                  <div className={`inline-block px-3 py-1 rounded-full text-sm font-bold mb-3 ${
+                  <div className={`inline-block px-2 py-1 sm:px-3 rounded-full text-xs sm:text-sm font-bold mb-2 sm:mb-3 ${
                     currentTheme === 'dark'
                       ? 'bg-purple-500/40 text-purple-200'
                       : 'bg-purple-200 text-purple-800'
                   }`}>
                     {book.category}
                   </div>
-                  <h3 className={`text-xl font-bold mb-2 drop-shadow-lg ${
+                  <h3 className={`text-base sm:text-lg md:text-xl font-bold mb-2 drop-shadow-lg ${
                     currentTheme === 'dark' ? 'text-white' : 'text-gray-900'
                   }`}>{book.title}</h3>
-                  <p className={`font-semibold mb-3 text-sm drop-shadow-md ${
+                  <p className={`font-semibold mb-2 sm:mb-3 text-xs sm:text-sm drop-shadow-md ${
                     currentTheme === 'dark' ? 'text-blue-300' : 'text-blue-700'
                   }`}>by {book.author}</p>
                   
                   {/* Quote Section */}
-                  <div className={`rounded-md p-3 border-l-4 ${
+                  <div className={`rounded-md p-2 sm:p-3 border-l-4 ${
                     currentTheme === 'dark'
                       ? 'bg-black/50 border-purple-400'
                       : 'bg-gray-100 border-purple-600'
                   }`}>
-                    <p className={`text-sm mb-2 italic font-semibold ${
+                    <p className={`text-xs sm:text-sm mb-1 sm:mb-2 italic font-semibold ${
                       currentTheme === 'dark' ? 'text-gray-300' : 'text-gray-600'
                     }`}>Quote:</p>
-                    <p className={`leading-relaxed italic text-sm ${
+                    <p className={`leading-relaxed italic text-xs sm:text-sm ${
                       currentTheme === 'dark' ? 'text-gray-100' : 'text-gray-800'
                     }`}>
                       "{book.quote}"
@@ -250,8 +250,8 @@ export default function Reading() {
                   </div>
 
                   {/* Rating */}
-                  <div className="mt-3 flex items-center space-x-1">
-                    <span className="text-yellow-400 text-base">⭐⭐⭐⭐⭐</span>
+                  <div className="mt-2 sm:mt-3 flex items-center space-x-1">
+                    <span className="text-yellow-400 text-sm sm:text-base">⭐⭐⭐⭐⭐</span>
                   </div>
                 </div>
               </motion.div>

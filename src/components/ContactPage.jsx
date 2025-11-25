@@ -26,7 +26,7 @@ export default function ContactPage() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen py-20 px-6 pr-20 relative overflow-hidden"
+      className="min-h-screen py-12 sm:py-20 px-4 sm:px-6 sm:pr-20 relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto relative">
         {/* Enhanced title */}
@@ -34,7 +34,7 @@ export default function ContactPage() {
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="text-7xl font-black text-center mb-28 tracking-wider relative"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-center mb-12 sm:mb-20 md:mb-28 tracking-wider relative"
         >
           <span className={`text-transparent bg-clip-text bg-gradient-to-r ${
             currentTheme === 'dark' 
@@ -59,7 +59,7 @@ export default function ContactPage() {
               {/* Gradient border glow */}
               <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-2xl opacity-30 group-hover:opacity-60 blur transition duration-300" />
               
-              <div className={`relative backdrop-blur-xl rounded-2xl p-8 border space-y-6 w-[420px] shadow-2xl ${
+              <div className={`relative backdrop-blur-xl rounded-2xl p-6 sm:p-8 border space-y-6 w-full max-w-[420px] shadow-2xl ${
                 currentTheme === 'dark'
                   ? 'bg-black/60 border-blue-500/30 shadow-blue-500/20'
                   : 'bg-white/90 border-blue-300/50 shadow-blue-300/30'
@@ -113,7 +113,7 @@ export default function ContactPage() {
               {/* Gradient border glow */}
               <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-2xl opacity-30 group-hover:opacity-60 blur transition duration-300" />
               
-              <div className={`relative backdrop-blur-xl rounded-2xl p-8 border w-[500px] shadow-2xl ${
+              <div className={`relative backdrop-blur-xl rounded-2xl p-6 sm:p-8 border w-full max-w-[500px] shadow-2xl ${
                 currentTheme === 'dark'
                   ? 'bg-black/60 border-blue-500/30 shadow-blue-500/20'
                   : 'bg-white/90 border-blue-300/50 shadow-blue-300/30'

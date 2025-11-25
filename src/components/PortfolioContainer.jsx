@@ -14,6 +14,7 @@ const NAV_ITEMS = ['About', 'Experience', 'Projects', 'Education & Awards', 'Vol
 
 export default function PortfolioContainer() {
   const [currentPage, setCurrentPage] = useState('About')
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const { theme, toggleTheme, currentTheme } = useTheme()
 
   return (
@@ -28,26 +29,29 @@ export default function PortfolioContainer() {
 
       {/* Navigation */}
       <nav className={`relative ${theme.navBg} backdrop-blur-md border-b ${theme.borderBlue} transition-colors duration-300`} style={{ zIndex: 10 }}>
-        <div className="max-w-7xl mx-auto px-6 py-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-600 rounded-lg flex items-center justify-center font-bold text-white text-lg">
+            <div className="flex items-center space-x-2 sm:space-x-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-400 to-purple-600 rounded-lg flex items-center justify-center font-bold text-white text-base sm:text-lg">
                 AM
               </div>
-              <span className={`${theme.textPrimary} font-bold tracking-wider text-sm transition-colors duration-300`}>
+              <span className={`${theme.textPrimary} font-bold tracking-wider text-xs sm:text-sm transition-colors duration-300 hidden sm:block`}>
                 ABHISHEK MEHTA_SOFTWARE ENGINEER
+              </span>
+              <span className={`${theme.textPrimary} font-bold tracking-wider text-xs transition-colors duration-300 sm:hidden`}>
+                A. MEHTA
               </span>
             </div>
 
-            {/* Nav Items and Theme Toggle */}
-            <div className="flex items-center space-x-3">
+            {/* Desktop Nav Items and Theme Toggle */}
+            <div className="hidden lg:flex items-center space-x-3">
               <div className="flex space-x-1">
                 {NAV_ITEMS.map((item) => (
                   <button
                     key={item}
                     onClick={() => setCurrentPage(item)}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                    className={`px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300 ${
                       currentPage === item
                         ? currentTheme === 'dark' 
                           ? 'bg-blue-500/30 text-white shadow-lg shadow-blue-500/50'
@@ -65,14 +69,14 @@ export default function PortfolioContainer() {
               {/* Theme Toggle Button */}
               <button
                 onClick={toggleTheme}
-                className={`relative p-3 rounded-xl ${
+                className={`relative p-2.5 rounded-xl ${
                   currentTheme === 'dark'
                     ? 'bg-white/10 hover:bg-white/20'
                     : 'bg-gray-200 hover:bg-gray-300'
                 } transition-all duration-300 group`}
                 aria-label="Toggle theme"
               >
-                <div className="relative w-6 h-6">
+                <div className="relative w-5 h-5">
                   {/* Sun Icon */}
                   <motion.svg
                     initial={false}
@@ -119,7 +123,114 @@ export default function PortfolioContainer() {
                 </div>
               </button>
             </div>
+
+            {/* Mobile Menu Button and Theme Toggle */}
+            <div className="flex lg:hidden items-center space-x-2">
+              <button
+                onClick={toggleTheme}
+                className={`relative p-2 rounded-xl ${
+                  currentTheme === 'dark'
+                    ? 'bg-white/10 hover:bg-white/20'
+                    : 'bg-gray-200 hover:bg-gray-300'
+                } transition-all duration-300`}
+                aria-label="Toggle theme"
+              >
+                <div className="relative w-5 h-5">
+                  <motion.svg
+                    initial={false}
+                    animate={{
+                      scale: currentTheme === 'light' ? 1 : 0,
+                      opacity: currentTheme === 'light' ? 1 : 0,
+                    }}
+                    transition={{ duration: 0.3 }}
+                    className="absolute inset-0 text-yellow-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                    />
+                  </motion.svg>
+                  <motion.svg
+                    initial={false}
+                    animate={{
+                      scale: currentTheme === 'dark' ? 1 : 0,
+                      opacity: currentTheme === 'dark' ? 1 : 0,
+                    }}
+                    transition={{ duration: 0.3 }}
+                    className="absolute inset-0 text-blue-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+                    />
+                  </motion.svg>
+                </div>
+              </button>
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className={`p-2 rounded-lg ${
+                  currentTheme === 'dark'
+                    ? 'bg-white/10 hover:bg-white/20 text-white'
+                    : 'bg-gray-200 hover:bg-gray-300 text-gray-900'
+                } transition-all duration-300`}
+                aria-label="Toggle menu"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {mobileMenuOpen ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  )}
+                </svg>
+              </button>
+            </div>
           </div>
+
+          {/* Mobile Menu */}
+          <AnimatePresence>
+            {mobileMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+                className="lg:hidden mt-4 pb-4 overflow-hidden"
+              >
+                <div className="flex flex-col space-y-2">
+                  {NAV_ITEMS.map((item) => (
+                    <button
+                      key={item}
+                      onClick={() => {
+                        setCurrentPage(item)
+                        setMobileMenuOpen(false)
+                      }}
+                      className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
+                        currentPage === item
+                          ? currentTheme === 'dark' 
+                            ? 'bg-blue-500/30 text-white shadow-lg shadow-blue-500/50'
+                            : 'bg-blue-100 text-blue-700 shadow-md shadow-blue-200'
+                          : currentTheme === 'dark'
+                            ? 'text-gray-300 hover:bg-white/10 hover:text-white'
+                            : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+                      }`}
+                    >
+                      {item}
+                    </button>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </nav>
 
@@ -137,17 +248,17 @@ export default function PortfolioContainer() {
             >
               <div className="max-w-7xl w-full relative">
                 {/* Innovative Asymmetric Layout */}
-                <div className="grid grid-cols-12 gap-8 items-center">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
                   
                   {/* Left Side - Profile Picture with Creative Border */}
                   <motion.div
                     initial={{ x: -100, opacity: 0, rotate: -10 }}
                     animate={{ x: 0, opacity: 1, rotate: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
-                    className="col-span-5 relative flex justify-center items-center"
+                    className="md:col-span-5 relative flex justify-center items-center"
                   >
                     {/* Profile Picture Container - Smaller Size */}
-                    <div className="relative w-80 h-80">
+                    <div className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80">
                       {/* Decorative Elements */}
                       <div className={`absolute -inset-4 rounded-full blur-2xl animate-pulse ${
                         currentTheme === 'dark' 
@@ -172,14 +283,14 @@ export default function PortfolioContainer() {
                       <motion.div
                         animate={{ rotate: 360 }}
                         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                        className={`absolute -bottom-8 -left-8 w-24 h-24 border-4 rounded-lg ${
+                        className={`absolute -bottom-4 -left-4 sm:-bottom-6 sm:-left-6 md:-bottom-8 md:-left-8 w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 border-4 rounded-lg ${
                           currentTheme === 'dark' ? 'border-blue-500/30' : 'border-blue-300/50'
                         }`}
                       />
                       <motion.div
                         animate={{ rotate: -360 }}
                         transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                        className={`absolute -top-8 -right-8 w-20 h-20 border-4 rounded-full ${
+                        className={`absolute -top-4 -right-4 sm:-top-6 sm:-right-6 md:-top-8 md:-right-8 w-10 h-10 sm:w-14 sm:h-14 md:w-20 md:h-20 border-4 rounded-full ${
                           currentTheme === 'dark' ? 'border-purple-500/30' : 'border-purple-300/50'
                         }`}
                       />
@@ -191,7 +302,7 @@ export default function PortfolioContainer() {
                     initial={{ x: 100, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
-                    className="col-span-7 space-y-6"
+                    className="md:col-span-7 space-y-4 sm:space-y-6 text-center md:text-left"
                   >
                     {/* Title with Glitch Effect */}
                     <motion.div
@@ -199,7 +310,7 @@ export default function PortfolioContainer() {
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: 0.6 }}
                     >
-                      <h1 className={`text-7xl font-black ${theme.textPrimary} mb-4 leading-tight transition-colors duration-300`}>
+                      <h1 className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black ${theme.textPrimary} mb-4 leading-tight transition-colors duration-300`}>
                         ABHISHEK
                   <br />
                         <span className={`text-transparent bg-clip-text bg-gradient-to-r ${theme.gradientText}`}>
@@ -213,10 +324,10 @@ export default function PortfolioContainer() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.8 }}
-                      className="flex items-center space-x-4"
+                      className="flex items-center justify-center md:justify-start space-x-4"
                     >
-                      <div className="h-1 w-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full" />
-                      <p className={`text-2xl ${theme.accentBlue} tracking-widest font-light transition-colors duration-300`}>
+                      <div className="h-1 w-12 sm:w-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full" />
+                      <p className={`text-lg sm:text-xl md:text-2xl ${theme.accentBlue} tracking-widest font-light transition-colors duration-300`}>
                         SOFTWARE ENGINEER
                       </p>
                     </motion.div>
@@ -226,13 +337,13 @@ export default function PortfolioContainer() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 1 }}
-                      className={`backdrop-blur-lg rounded-2xl p-6 border-2 transition-all duration-300 ${
+                      className={`backdrop-blur-lg rounded-2xl p-4 sm:p-6 border-2 transition-all duration-300 ${
                         currentTheme === 'dark'
                           ? 'bg-white/10 border-blue-500/30 hover:border-blue-400/50'
                           : 'bg-white/90 border-gray-300 hover:border-blue-500 shadow-lg'
                       }`}
                     >
-                      <p className={`text-lg ${theme.textSecondary} leading-relaxed transition-colors duration-300`}>
+                      <p className={`text-base sm:text-lg ${theme.textSecondary} leading-relaxed transition-colors duration-300`}>
                         I specialise in{' '}
                         <span className={`${theme.accentBlue} font-semibold`}>mobile development</span>{' '}
                         and{' '}
@@ -247,7 +358,7 @@ export default function PortfolioContainer() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 1.1 }}
-                      className="flex space-x-4 pt-4"
+                      className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 pt-4 justify-center md:justify-start"
                     >
                       <a
                         href="https://github.com/Abby010"
@@ -282,7 +393,7 @@ export default function PortfolioContainer() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 1.2 }}
-                      className="grid grid-cols-3 gap-4 pt-6"
+                      className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6"
                     >
                       <div className={`${theme.cardBg} backdrop-blur-sm rounded-xl p-4 border ${theme.border} ${
                         currentTheme === 'dark' ? 'hover:border-blue-400/50' : 'hover:border-blue-500'
@@ -320,14 +431,14 @@ export default function PortfolioContainer() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
-              className="min-h-screen py-20 px-6 overflow-y-auto"
+              className="min-h-screen py-12 sm:py-20 px-4 sm:px-6 overflow-y-auto"
             >
-              <div className="max-w-7xl mx-auto pb-20">
+              <div className="max-w-7xl mx-auto pb-12 sm:pb-20">
                 <motion.h2 
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.6 }}
-                  className="text-5xl font-bold text-center mb-16"
+                  className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-8 sm:mb-12 md:mb-16"
                 >
                   <span className={`text-transparent bg-clip-text bg-gradient-to-r ${theme.gradientText} transition-colors duration-300`}>
                     Education & Awards
@@ -335,27 +446,27 @@ export default function PortfolioContainer() {
                 </motion.h2>
                 
                 {/* Soft Background Container - Reduces harsh contrast */}
-                <div className={`relative backdrop-blur-sm rounded-3xl p-8 ${
+                <div className={`relative backdrop-blur-sm rounded-3xl p-4 sm:p-6 md:p-8 ${
                   currentTheme === 'dark' 
                     ? 'bg-gradient-to-br from-blue-900/10 via-purple-900/10 to-transparent' 
                     : 'bg-gradient-to-br from-blue-50/80 via-purple-50/80 to-transparent border border-gray-200'
                 }`}>
                   {/* Innovative Grid Layout */}
-                  <div className="relative grid grid-cols-12 gap-6">
+                  <div className="relative grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6">
                     
                     {/* Main Degree Card - Large, Prominent */}
                     <motion.div
                       initial={{ x: -100, opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
                       transition={{ delay: 0.2 }}
-                      className={`col-span-7 row-span-2 backdrop-blur-lg rounded-3xl p-8 border transition-all duration-300 shadow-2xl ${
+                      className={`md:col-span-7 md:row-span-2 backdrop-blur-lg rounded-3xl p-4 sm:p-6 md:p-8 border transition-all duration-300 shadow-2xl ${
                         currentTheme === 'dark'
                           ? 'bg-gradient-to-br from-blue-500/30 to-purple-500/30 border-blue-500/30 hover:border-blue-400/50'
                           : 'bg-white/90 border-gray-200 hover:border-blue-400 shadow-lg'
                       }`}
                     >
-                      <div className="flex items-start space-x-6 mb-6">
-                        <div className="w-48 h-48 bg-white rounded-2xl flex items-center justify-center flex-shrink-0 p-6 overflow-hidden shadow-lg">
+                      <div className="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6 mb-4 sm:mb-6">
+                        <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 bg-white rounded-2xl flex items-center justify-center flex-shrink-0 p-4 sm:p-6 overflow-hidden shadow-lg mx-auto sm:mx-0">
                           <img 
                             src="/UOW LOGO.png" 
                             alt="University of Wollongong"
@@ -363,17 +474,17 @@ export default function PortfolioContainer() {
                             style={{ transform: 'scale(1.23)' }}
                           />
                         </div>
-                        <div className="flex-1">
-                          <h3 className={`text-4xl font-bold ${theme.textPrimary} mb-3 leading-tight transition-colors duration-300`}>
+                        <div className="flex-1 text-center sm:text-left">
+                          <h3 className={`text-2xl sm:text-3xl md:text-4xl font-bold ${theme.textPrimary} mb-2 sm:mb-3 leading-tight transition-colors duration-300`}>
                             Bachelor of Computer Science
-                            <span className={`block text-2xl ${theme.accentBlue} mt-2 transition-colors duration-300`}>(Dean's Scholar)</span>
+                            <span className={`block text-lg sm:text-xl md:text-2xl ${theme.accentBlue} mt-1 sm:mt-2 transition-colors duration-300`}>(Dean's Scholar)</span>
                           </h3>
-                          <p className={`${theme.accentBlue} text-xl font-semibold transition-colors duration-300`}>
+                          <p className={`${theme.accentBlue} text-base sm:text-lg md:text-xl font-semibold transition-colors duration-300`}>
                             University of Wollongong
                           </p>
                         </div>
                       </div>
-                      <div className={`flex items-center space-x-3 ${theme.textSecondary} text-lg transition-colors duration-300`}>
+                      <div className={`flex items-center justify-center sm:justify-start space-x-3 ${theme.textSecondary} text-base sm:text-lg transition-colors duration-300`}>
                         <svg className={`w-5 h-5 ${theme.accentBlue}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
@@ -386,25 +497,25 @@ export default function PortfolioContainer() {
                       initial={{ y: -50, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: 0.4 }}
-                      className={`col-span-5 row-span-2 rounded-2xl p-8 shadow-2xl hover:scale-105 transition-transform duration-300 flex items-center justify-center ${
+                      className={`md:col-span-5 md:row-span-2 rounded-2xl p-6 sm:p-8 shadow-2xl hover:scale-105 transition-transform duration-300 flex items-center justify-center ${
                         currentTheme === 'dark'
                           ? 'bg-gradient-to-br from-blue-400 to-cyan-500'
                           : 'bg-gradient-to-br from-blue-500 to-cyan-600'
                       }`}
                     >
                       <div className="text-center">
-                        <p className="text-white/80 text-sm font-semibold mb-3 uppercase tracking-wider">
+                        <p className="text-white/80 text-xs sm:text-sm font-semibold mb-2 sm:mb-3 uppercase tracking-wider">
                           WAM / Grade
                         </p>
-                        <p className="text-white text-7xl font-black mb-4">92.5%</p>
-                        <div className="flex items-center justify-center space-x-1 mb-4">
-                          <span className="text-white text-3xl">⭐⭐⭐⭐⭐</span>
+                        <p className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-3 sm:mb-4">92.5%</p>
+                        <div className="flex items-center justify-center space-x-1 mb-3 sm:mb-4">
+                          <span className="text-white text-xl sm:text-2xl md:text-3xl">⭐⭐⭐⭐⭐</span>
                         </div>
-                        <div className="mt-6 pt-6 border-t-2 border-white/30">
-                          <p className="text-white text-xl font-bold tracking-wide">
+                        <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t-2 border-white/30">
+                          <p className="text-white text-base sm:text-lg md:text-xl font-bold tracking-wide">
                             High Distinction
                           </p>
-                          <p className="text-white/90 text-lg font-semibold mt-1">
+                          <p className="text-white/90 text-sm sm:text-base md:text-lg font-semibold mt-1">
                             Average
                           </p>
                         </div>
@@ -426,7 +537,7 @@ export default function PortfolioContainer() {
                   transition={{ delay: 1.2, duration: 0.8 }}
                   className="relative"
                 >
-                  <h3 className={`text-4xl font-bold text-center mb-12 text-transparent bg-clip-text ${
+                  <h3 className={`text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-12 text-transparent bg-clip-text ${
                     currentTheme === 'dark'
                       ? 'bg-gradient-to-r from-yellow-300 via-orange-400 to-pink-400'
                       : 'bg-gradient-to-r from-yellow-500 via-orange-500 to-pink-500'
@@ -435,32 +546,32 @@ export default function PortfolioContainer() {
                   </h3>
 
                   {/* Awards in a Creative Layout */}
-                  <div className="relative max-w-6xl mx-auto grid grid-cols-2 gap-6">
+                  <div className="relative max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                     {/* Dean's Merit List - Large Card */}
                     <motion.div
                       initial={{ x: -50, opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
                       transition={{ delay: 1.4 }}
-                      className={`group col-span-1 backdrop-blur-lg rounded-2xl p-6 border transition-all duration-300 hover:scale-105 relative ${
+                      className={`group col-span-1 backdrop-blur-lg rounded-2xl p-4 sm:p-5 md:p-6 border transition-all duration-300 hover:scale-105 relative ${
                         currentTheme === 'dark'
                           ? 'bg-gradient-to-br from-yellow-500/20 to-orange-500/20 border-yellow-500/30 hover:border-yellow-400/50'
                           : 'bg-gradient-to-br from-yellow-50 to-orange-50 border-yellow-300 hover:border-yellow-500 shadow-md'
                       }`}
                     >
-                      <div className="flex items-start space-x-4">
-                        <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center text-3xl shadow-lg flex-shrink-0">
+                      <div className="flex items-start space-x-3 sm:space-x-4">
+                        <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center text-2xl sm:text-3xl shadow-lg flex-shrink-0">
                           🏅
                         </div>
                         <div>
-                          <h4 className={`${theme.textPrimary} font-bold text-xl mb-2 transition-colors duration-300`}>Dean's Merit List</h4>
-                          <p className={`font-semibold mb-1 transition-colors duration-300 ${
+                          <h4 className={`${theme.textPrimary} font-bold text-base sm:text-lg md:text-xl mb-1 sm:mb-2 transition-colors duration-300`}>Dean's Merit List</h4>
+                          <p className={`font-semibold mb-1 text-sm sm:text-base transition-colors duration-300 ${
                             currentTheme === 'dark' ? 'text-yellow-300' : 'text-yellow-600'
                           }`}>2023, 2024</p>
-                          <p className={`${theme.textSecondary} text-sm transition-colors duration-300`}>Top 5% of undergraduate students</p>
+                          <p className={`${theme.textSecondary} text-xs sm:text-sm transition-colors duration-300`}>Top 5% of undergraduate students</p>
                         </div>
                       </div>
                       {/* Tooltip */}
-                      <div className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-4 py-3 text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none w-80 shadow-xl z-50 ${
+                      <div className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none w-64 sm:w-80 shadow-xl z-50 ${
                         currentTheme === 'dark'
                           ? 'bg-gray-900 text-white border border-yellow-500/50'
                           : 'bg-white text-gray-900 border border-yellow-400 shadow-2xl'
@@ -480,20 +591,20 @@ export default function PortfolioContainer() {
                       initial={{ x: 50, opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
                       transition={{ delay: 1.6 }}
-                      className={`group col-span-1 backdrop-blur-lg rounded-2xl p-6 border transition-all duration-300 hover:scale-105 relative ${
+                      className={`group col-span-1 backdrop-blur-lg rounded-2xl p-4 sm:p-5 md:p-6 border transition-all duration-300 hover:scale-105 relative ${
                         currentTheme === 'dark'
                           ? 'bg-gradient-to-br from-blue-500/20 to-purple-500/20 border-blue-500/30 hover:border-blue-400/50'
                           : 'bg-gradient-to-br from-blue-50 to-purple-50 border-blue-300 hover:border-blue-500 shadow-md'
                       }`}
                     >
-                      <div className="flex items-start space-x-4">
-                        <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-500 rounded-xl flex items-center justify-center text-3xl shadow-lg flex-shrink-0">
+                      <div className="flex items-start space-x-3 sm:space-x-4">
+                        <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-blue-400 to-purple-500 rounded-xl flex items-center justify-center text-2xl sm:text-3xl shadow-lg flex-shrink-0">
                           🗣️
                         </div>
                         <div>
-                          <h4 className={`${theme.textPrimary} font-bold text-xl mb-2 transition-colors duration-300`}>UOWx Leadership</h4>
-                          <p className={`${theme.accentBlue} font-semibold mb-1 transition-colors duration-300`}>2024</p>
-                          <p className={`${theme.textSecondary} text-sm transition-colors duration-300`}>Leadership & Communication skills award</p>
+                          <h4 className={`${theme.textPrimary} font-bold text-base sm:text-lg md:text-xl mb-1 sm:mb-2 transition-colors duration-300`}>UOWx Leadership</h4>
+                          <p className={`${theme.accentBlue} font-semibold mb-1 text-sm sm:text-base transition-colors duration-300`}>2024</p>
+                          <p className={`${theme.textSecondary} text-xs sm:text-sm transition-colors duration-300`}>Leadership & Communication skills award</p>
                         </div>
                       </div>
                       {/* Tooltip */}
@@ -517,20 +628,20 @@ export default function PortfolioContainer() {
                       initial={{ x: -50, opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
                       transition={{ delay: 1.8 }}
-                      className={`group col-span-1 backdrop-blur-lg rounded-2xl p-6 border transition-all duration-300 hover:scale-105 relative ${
+                      className={`group col-span-1 backdrop-blur-lg rounded-2xl p-4 sm:p-5 md:p-6 border transition-all duration-300 hover:scale-105 relative ${
                         currentTheme === 'dark'
                           ? 'bg-gradient-to-br from-purple-500/20 to-pink-500/20 border-purple-500/30 hover:border-purple-400/50'
                           : 'bg-gradient-to-br from-purple-50 to-pink-50 border-purple-300 hover:border-purple-500 shadow-md'
                       }`}
                     >
-                      <div className="flex items-start space-x-4">
-                        <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-500 rounded-xl flex items-center justify-center text-3xl shadow-lg flex-shrink-0">
+                      <div className="flex items-start space-x-3 sm:space-x-4">
+                        <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-purple-400 to-pink-500 rounded-xl flex items-center justify-center text-2xl sm:text-3xl shadow-lg flex-shrink-0">
                           🧠
                         </div>
                         <div>
-                          <h4 className={`${theme.textPrimary} font-bold text-xl mb-2 transition-colors duration-300`}>Academic Excellence</h4>
-                          <p className={`${theme.accentPurple} font-semibold mb-1 transition-colors duration-300`}>CSIT226</p>
-                          <p className={`${theme.textSecondary} text-sm transition-colors duration-300`}>Highest score (~200 students)</p>
+                          <h4 className={`${theme.textPrimary} font-bold text-base sm:text-lg md:text-xl mb-1 sm:mb-2 transition-colors duration-300`}>Academic Excellence</h4>
+                          <p className={`${theme.accentPurple} font-semibold mb-1 text-sm sm:text-base transition-colors duration-300`}>CSIT226</p>
+                          <p className={`${theme.textSecondary} text-xs sm:text-sm transition-colors duration-300`}>Highest score (~200 students)</p>
                         </div>
                       </div>
                       {/* Tooltip */}
@@ -554,22 +665,22 @@ export default function PortfolioContainer() {
                       initial={{ x: 50, opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
                       transition={{ delay: 2.0 }}
-                      className={`group col-span-1 backdrop-blur-lg rounded-2xl p-6 border transition-all duration-300 hover:scale-105 relative ${
+                      className={`group col-span-1 backdrop-blur-lg rounded-2xl p-4 sm:p-5 md:p-6 border transition-all duration-300 hover:scale-105 relative ${
                         currentTheme === 'dark'
                           ? 'bg-gradient-to-br from-green-500/20 to-teal-500/20 border-green-500/30 hover:border-green-400/50'
                           : 'bg-gradient-to-br from-green-50 to-teal-50 border-green-300 hover:border-green-500 shadow-md'
                       }`}
                     >
-                      <div className="flex items-start space-x-4">
-                        <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-teal-500 rounded-xl flex items-center justify-center text-3xl shadow-lg flex-shrink-0">
+                      <div className="flex items-start space-x-3 sm:space-x-4">
+                        <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-green-400 to-teal-500 rounded-xl flex items-center justify-center text-2xl sm:text-3xl shadow-lg flex-shrink-0">
                           🥈
                         </div>
                         <div>
-                          <h4 className={`${theme.textPrimary} font-bold text-xl mb-2 transition-colors duration-300`}>Capstone 2nd Place</h4>
-                          <p className={`font-semibold mb-1 transition-colors duration-300 ${
+                          <h4 className={`${theme.textPrimary} font-bold text-base sm:text-lg md:text-xl mb-1 sm:mb-2 transition-colors duration-300`}>Capstone 2nd Place</h4>
+                          <p className={`font-semibold mb-1 text-sm sm:text-base transition-colors duration-300 ${
                             currentTheme === 'dark' ? 'text-green-300' : 'text-green-600'
                           }`}>2025</p>
-                          <p className={`${theme.textSecondary} text-sm transition-colors duration-300`}>Out of 40 groups</p>
+                          <p className={`${theme.textSecondary} text-xs sm:text-sm transition-colors duration-300`}>Out of 40 groups</p>
                         </div>
                       </div>
                       {/* Tooltip */}

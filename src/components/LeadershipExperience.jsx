@@ -32,11 +32,11 @@ export default function LeadershipExperience() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen flex items-center py-20 px-6 relative overflow-hidden"
+      className="min-h-screen flex items-center py-12 sm:py-20 px-4 sm:px-6 relative overflow-hidden"
     >
       <div className="max-w-5xl mx-auto relative w-full">
         {/* Horizontal Line Layout */}
-        <div className="grid grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {volunteering.map((item, index) => (
             <motion.div
               key={index}
@@ -44,8 +44,8 @@ export default function LeadershipExperience() {
               animate={{ scale: 1, opacity: 1, y: 0 }}
               transition={{ delay: index * 0.2, duration: 0.6, type: "spring" }}
             >
-              <div className={`relative bg-gradient-to-br ${item.color} p-0.5 rounded-xl shadow-xl hover:scale-105 transition-transform duration-300`}>
-                <div className="bg-black/80 backdrop-blur-md rounded-xl p-5 w-full h-full flex flex-col justify-between min-h-[300px]">
+                <div className={`relative bg-gradient-to-br ${item.color} p-0.5 rounded-xl shadow-xl hover:scale-105 transition-transform duration-300`}>
+                <div className="bg-black/80 backdrop-blur-md rounded-xl p-4 sm:p-5 w-full h-full flex flex-col justify-between min-h-[250px] sm:min-h-[300px]">
                   {/* Logo or Icon */}
                   <div className="flex items-center justify-center mb-4">
                     {item.logo ? (

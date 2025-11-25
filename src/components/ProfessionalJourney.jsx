@@ -135,7 +135,7 @@ export default function ProfessionalJourney() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="h-screen overflow-y-auto pt-32 pb-32 px-6 relative"
+      className="h-screen overflow-y-auto pt-20 sm:pt-32 pb-32 px-4 sm:px-6 relative"
     >
       {/* Canvas for lightning effect */}
       <canvas
@@ -146,7 +146,7 @@ export default function ProfessionalJourney() {
 
       <div className="max-w-6xl mx-auto relative pb-32" style={{ zIndex: 2 }}>
         {/* Timeline with nodes */}
-        <div className="relative flex flex-col items-center space-y-72">
+        <div className="relative flex flex-col items-center space-y-32 sm:space-y-48 md:space-y-64 lg:space-y-72">
           {/* Upward Arrow at the top of timeline */}
           <motion.div
             initial={{ y: 20, opacity: 0 }}
@@ -155,7 +155,7 @@ export default function ProfessionalJourney() {
             className="flex flex-col items-center mb-8"
           >
             <motion.svg 
-              className={`w-32 h-32 transition-all duration-300 ${
+              className={`w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 transition-all duration-300 ${
                 currentTheme === 'dark'
                   ? isLightning 
                     ? 'text-blue-300 drop-shadow-[0_0_25px_rgba(96,165,250,1)]' 
@@ -184,7 +184,7 @@ export default function ProfessionalJourney() {
               />
             </motion.svg>
             <motion.div 
-              className={`w-2 h-24 mt-2 transition-all duration-300 ${
+              className={`w-2 h-12 sm:h-16 md:h-24 mt-2 transition-all duration-300 ${
                 currentTheme === 'dark' 
                   ? 'bg-gradient-to-b from-blue-400 to-transparent' 
                   : 'bg-gradient-to-b from-blue-700 to-transparent'
@@ -207,7 +207,7 @@ export default function ProfessionalJourney() {
               className="relative"
             >
               {/* Node Circle with Logo */}
-              <div className={`w-48 h-48 bg-white rounded-full flex items-center justify-center shadow-2xl border-4 p-5 overflow-hidden transition-all duration-300 ${
+              <div className={`w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 bg-white rounded-full flex items-center justify-center shadow-2xl border-4 p-3 sm:p-4 md:p-5 overflow-hidden transition-all duration-300 ${
                 currentTheme === 'dark' 
                   ? 'shadow-blue-500/50 border-blue-400/30' 
                   : 'shadow-blue-400/40 border-blue-500/40'
@@ -233,18 +233,18 @@ export default function ProfessionalJourney() {
                 initial={{ x: index % 2 === 0 ? -100 : 100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: index * 0.2 + 0.3, duration: 0.5 }}
-                className={`absolute top-0 ${index % 2 === 0 ? 'right-56' : 'left-56'} w-[500px]`}
+                className={`absolute top-0 ${index % 2 === 0 ? 'right-0 md:right-56' : 'left-0 md:left-56'} w-full max-w-[500px] mt-40 sm:mt-48 md:mt-0 px-4 md:px-0`}
               >
-                <div className={`backdrop-blur-md rounded-xl p-6 border transition-all duration-300 ${
+                <div className={`backdrop-blur-md rounded-xl p-4 sm:p-5 md:p-6 border transition-all duration-300 ${
                   currentTheme === 'dark'
                     ? 'bg-white/10 border-blue-500/30 hover:border-blue-400/50'
                     : 'bg-white/90 border-blue-400/40 hover:border-blue-600/60 shadow-lg'
                 }`}>
-                  <div className={`text-sm font-bold mb-2 transition-colors duration-300 ${theme.accentBlue}`}>{exp.year}</div>
-                  <h3 className={`text-2xl font-bold mb-1 transition-colors duration-300 ${theme.textPrimary}`}>{exp.title}</h3>
-                  <p className={`font-semibold mb-1 transition-colors duration-300 ${theme.accentPurple}`}>{exp.company}</p>
-                  <p className={`text-sm mb-3 transition-colors duration-300 ${theme.textTertiary}`}>{exp.location}</p>
-                  <ul className={`leading-relaxed space-y-2 transition-colors duration-300 ${theme.textSecondary}`}>
+                  <div className={`text-xs sm:text-sm font-bold mb-2 transition-colors duration-300 ${theme.accentBlue}`}>{exp.year}</div>
+                  <h3 className={`text-lg sm:text-xl md:text-2xl font-bold mb-1 transition-colors duration-300 ${theme.textPrimary}`}>{exp.title}</h3>
+                  <p className={`font-semibold mb-1 text-sm sm:text-base transition-colors duration-300 ${theme.accentPurple}`}>{exp.company}</p>
+                  <p className={`text-xs sm:text-sm mb-3 transition-colors duration-300 ${theme.textTertiary}`}>{exp.location}</p>
+                  <ul className={`leading-relaxed space-y-1.5 sm:space-y-2 transition-colors duration-300 ${theme.textSecondary} text-sm sm:text-base`}>
                     {exp.points.map((point, idx) => (
                       <li key={idx} className="flex items-start">
                         <span className={`mr-2 mt-1 transition-colors duration-300 ${theme.accentBlue}`}>•</span>

@@ -6,7 +6,7 @@ export default function Projects() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="h-screen flex items-center justify-center px-6"
+      className="h-screen flex items-center justify-center px-4 sm:px-6"
     >
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
@@ -24,14 +24,14 @@ export default function Projects() {
             repeat: Infinity,
             repeatDelay: 1
           }}
-          className="text-8xl mb-8"
+          className="text-5xl sm:text-6xl md:text-8xl mb-6 sm:mb-8"
         >
           🚀
         </motion.div>
-        <h2 className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 mb-4">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 mb-4">
           Coming Soon
         </h2>
-        <p className="text-gray-400 text-xl">
+        <p className="text-gray-400 text-base sm:text-lg md:text-xl">
           Exciting projects are on the way!
         </p>
       </motion.div>

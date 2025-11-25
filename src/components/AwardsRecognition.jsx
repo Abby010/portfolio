@@ -14,13 +14,13 @@ export default function AwardsRecognition() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen py-20 px-6 relative"
+      className="min-h-screen py-12 sm:py-20 px-4 sm:px-6 relative"
     >
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-5xl font-bold text-white text-center mb-16">Awards & Recognition</h2>
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white text-center mb-8 sm:mb-12 md:mb-16">Awards & Recognition</h2>
 
         {/* Network Layout */}
-        <div className="relative h-[600px] w-full">
+        <div className="relative h-[800px] sm:h-[700px] md:h-[600px] w-full">
           {/* Connection Lines */}
           <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 1 }}>
             {awards.map((award, i) => {
@@ -57,10 +57,10 @@ export default function AwardsRecognition() {
                 zIndex: 2
               }}
             >
-              <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md rounded-2xl p-6 border border-blue-500/30 hover:border-blue-400/60 hover:scale-105 transition-all duration-300 cursor-pointer shadow-2xl shadow-blue-500/20 w-64">
-                <div className="text-6xl mb-3 text-center">{award.icon}</div>
-                <h3 className="text-lg font-bold text-white text-center mb-2">{award.title}</h3>
-                <p className="text-blue-300 text-center text-sm font-semibold mb-2">{award.year}</p>
+              <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md rounded-2xl p-4 sm:p-5 md:p-6 border border-blue-500/30 hover:border-blue-400/60 hover:scale-105 transition-all duration-300 cursor-pointer shadow-2xl shadow-blue-500/20 w-48 sm:w-56 md:w-64">
+                <div className="text-4xl sm:text-5xl md:text-6xl mb-2 sm:mb-3 text-center">{award.icon}</div>
+                <h3 className="text-sm sm:text-base md:text-lg font-bold text-white text-center mb-1 sm:mb-2">{award.title}</h3>
+                <p className="text-blue-300 text-center text-xs sm:text-sm font-semibold mb-1 sm:mb-2">{award.year}</p>
                 {award.description && (
                   <p className="text-gray-300 text-center text-xs">{award.description}</p>
                 )}
