@@ -212,7 +212,7 @@ export default function Reading() {
                 initial={{ x: index % 2 === 0 ? -100 : 100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: index * 0.2 + 0.3, duration: 0.5 }}
-                className={`absolute top-0 ${index % 2 === 0 ? 'right-0 md:right-96' : 'left-0 md:left-96'} w-full max-w-[780px] mt-56 sm:mt-72 md:mt-0 px-4 md:px-0`}
+                className={`absolute top-0 ${index % 2 === 0 ? 'right-0 md:right-96' : 'left-0 md:left-96'} w-full max-w-[1560px] mt-56 sm:mt-72 md:mt-0 px-4 md:px-0`}
               >
                 <div className={`backdrop-blur-lg rounded-lg p-3 sm:p-4 md:p-5 border transition-all duration-300 shadow-lg ${
                   currentTheme === 'dark'

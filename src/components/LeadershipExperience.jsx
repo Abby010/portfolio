@@ -20,7 +20,6 @@ export default function LeadershipExperience() {
     {
       title: 'EIS Faculty',
       role: 'Engineering Mentor',
-      organization: 'University of Wollongong',
       description: 'Mentored engineering students, providing guidance on academic and career development',
       logo: '/UOW LOGO.png',
       color: 'from-purple-400 to-pink-500'
