@@ -204,7 +204,7 @@ export default function ProfessionalJourney() {
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: index * 0.2, duration: 0.5 }}
-              className="relative"
+              className="relative flex flex-col items-center w-full"
             >
               {/* Node Circle with Logo */}
               <div className={`w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 bg-white rounded-full flex items-center justify-center shadow-2xl border-4 p-3 sm:p-4 md:p-5 overflow-hidden transition-all duration-300 ${
@@ -229,31 +229,57 @@ export default function ProfessionalJourney() {
               </div>
 
               {/* Content Card */}
-              <motion.div
-                initial={{ x: index % 2 === 0 ? -100 : 100, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: index * 0.2 + 0.3, duration: 0.5 }}
-                className={`absolute top-0 ${index % 2 === 0 ? 'right-0 md:right-80' : 'left-0 md:left-80'} w-full max-w-[1000px] mt-40 sm:mt-48 md:mt-0 px-4 md:px-0`}
-              >
-                <div className={`backdrop-blur-md rounded-xl p-4 sm:p-5 md:p-6 border transition-all duration-300 ${
-                  currentTheme === 'dark'
-                    ? 'bg-white/10 border-blue-500/30 hover:border-blue-400/50'
-                    : 'bg-white/90 border-blue-400/40 hover:border-blue-600/60 shadow-lg'
-                }`}>
-                  {/* Horizontal 2-column layout */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                    {/* Left Column - Header Info */}
-                    <div className="flex flex-col">
+              <div className="w-full flex justify-center mt-16 sm:mt-20 md:mt-24 px-3 sm:px-4">
+                <motion.div
+                  initial={{ x: index % 2 === 0 ? -120 : 120, opacity: 0 }}
+                  whileInView={{ x: 0, opacity: 1 }}
+                  viewport={{ once: true, amount: 0.4 }}
+                  transition={{ delay: 0.1, duration: 0.6 }}
+                  className="w-full max-w-[1200px]"
+                >
+                  <div className={`backdrop-blur-2xl rounded-2xl p-5 sm:p-6 md:p-8 border transition-all duration-300 ${
+                    currentTheme === 'dark'
+                      ? 'bg-black/40 border-blue-500/30 hover:border-blue-400/50'
+                      : 'bg-white/95 border-blue-400/40 hover:border-blue-600/60 shadow-2xl'
+                  }`}>
+                    {/* Horizontal 3-column layout - Header | Bullets Left | Bullets Right */}
+                    <div className="grid grid-cols-1 md:grid-cols-[280px_1fr_1fr] gap-4 sm:gap-6 md:gap-10 items-start">
+                      {/* Left Column - Header Info */}
+                      <div className="flex flex-col">
                       <div className={`text-xs sm:text-sm font-bold mb-2 transition-colors duration-300 ${theme.accentBlue}`}>{exp.year}</div>
                       <h3 className={`text-lg sm:text-xl md:text-2xl font-bold mb-1 transition-colors duration-300 ${theme.textPrimary}`}>{exp.title}</h3>
                       <p className={`font-semibold mb-1 text-sm sm:text-base transition-colors duration-300 ${theme.accentPurple}`}>{exp.company}</p>
                       <p className={`text-xs sm:text-sm transition-colors duration-300 ${theme.textTertiary}`}>{exp.location}</p>
                     </div>
                     
-                    {/* Right Column - Bullet Points */}
-                    <div className="flex flex-col">
-                      <ul className={`leading-relaxed space-y-1.5 sm:space-y-2 transition-colors duration-300 ${theme.textSecondary} text-sm sm:text-base`}>
-                        {exp.points.map((point, idx) => (
+                      {/* Middle Column - First Half of Bullet Points */}
+                      <div className="flex flex-col">
+                      <ul className={`leading-relaxed space-y-1.5 sm:space-y-2 transition-colors duration-300 ${theme.textSecondary} text-sm md:text-base`}>
+                        {exp.points.slice(0, Math.ceil(exp.points.length / 2)).map((point, idx) => (
+                          <li key={idx} className="flex items-start">
+                            <span className={`mr-2 mt-1 transition-colors duration-300 ${theme.accentBlue}`}>•</span>
+                            <span>
+                              {typeof point === 'string' ? (
+                                point
+                              ) : (
+                                <>
+                                  {point.text}
+                                  <span className={`font-bold transition-colors duration-300 ${theme.accentBlue}`}>{point.highlight}</span>
+                                  {point.rest}
+                                  <span className={`font-bold transition-colors duration-300 ${theme.accentBlue}`}>{point.highlight2}</span>
+                                  {point.rest2}
+                                </>
+                              )}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                      {/* Right Column - Second Half of Bullet Points */}
+                      <div className="flex flex-col">
+                      <ul className={`leading-relaxed space-y-1.5 sm:space-y-2 transition-colors duration-300 ${theme.textSecondary} text-sm md:text-base`}>
+                        {exp.points.slice(Math.ceil(exp.points.length / 2)).map((point, idx) => (
                           <li key={idx} className="flex items-start">
                             <span className={`mr-2 mt-1 transition-colors duration-300 ${theme.accentBlue}`}>•</span>
                             <span>
@@ -276,7 +302,8 @@ export default function ProfessionalJourney() {
                   </div>
                 </div>
               </motion.div>
-            </motion.div>
+            </div>
+          </motion.div>
           ))}
         </div>
       </div>

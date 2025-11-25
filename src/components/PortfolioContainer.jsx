@@ -465,8 +465,8 @@ export default function PortfolioContainer() {
                           : 'bg-white/90 border-gray-200 hover:border-blue-400 shadow-lg'
                       }`}
                     >
-                      <div className="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6 mb-4 sm:mb-6">
-                        <div className="w-[6.5rem] h-[6.5rem] sm:w-32 sm:h-32 md:w-[9.5rem] md:h-[9.5rem] bg-white rounded-2xl flex items-center justify-center flex-shrink-0 p-3 sm:p-5 overflow-hidden shadow-lg mx-auto sm:mx-0">
+                      <div className="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 mb-4 sm:mb-6">
+                        <div className="w-[6.5rem] h-[6.5rem] sm:w-32 sm:h-32 md:w-[9.5rem] md:h-[9.5rem] bg-white rounded-2xl flex items-center justify-center flex-shrink-0 p-3 sm:p-5 overflow-hidden shadow-lg mx-auto sm:mx-0 sm:mr-12">
                           <img 
                             src="/UOW LOGO.png" 
                             alt="University of Wollongong"

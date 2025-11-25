@@ -192,7 +192,7 @@ export default function Reading() {
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: index * 0.2, duration: 0.5 }}
-              className="relative"
+              className="relative flex flex-col items-center"
             >
               {/* Book Cover Node */}
               <div className={`w-48 h-[280px] sm:w-64 sm:h-[360px] md:w-80 md:h-[450px] rounded-2xl flex items-center justify-center shadow-2xl border-4 p-2 sm:p-3 overflow-hidden ${
@@ -209,12 +209,12 @@ export default function Reading() {
 
               {/* Book Details Card */}
               <motion.div
-                initial={{ x: index % 2 === 0 ? -100 : 100, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
+                initial={{ y: 50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: index * 0.2 + 0.3, duration: 0.5 }}
-                className={`absolute top-0 ${index % 2 === 0 ? 'right-0 md:right-96' : 'left-0 md:left-96'} w-full max-w-[1560px] mt-56 sm:mt-72 md:mt-0 px-4 md:px-0`}
+                className="relative mt-8 flex justify-center px-4"
               >
-                <div className={`backdrop-blur-lg rounded-lg p-3 sm:p-4 md:p-5 border transition-all duration-300 shadow-lg ${
+                <div className={`backdrop-blur-lg rounded-lg p-3 sm:p-4 md:p-5 border transition-all duration-300 shadow-lg w-full max-w-[600px] ${
                   currentTheme === 'dark'
                     ? 'bg-white/20 border-blue-500/40 hover:border-blue-400/60'
                     : 'bg-white/95 border-gray-300 hover:border-blue-500'
