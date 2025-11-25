@@ -254,7 +254,7 @@ export default function ProfessionalJourney() {
                     
                       {/* Middle Column - First Half of Bullet Points */}
                       <div className="flex flex-col">
-                      <ul className={`leading-relaxed space-y-1.5 sm:space-y-2 transition-colors duration-300 ${theme.textSecondary} text-sm md:text-base`}>
+                      <ul className={`leading-relaxed space-y-1.5 sm:space-y-2 transition-colors duration-300 ${theme.textSecondary} text-base sm:text-lg md:text-xl`}>
                         {exp.points.slice(0, Math.ceil(exp.points.length / 2)).map((point, idx) => (
                           <li key={idx} className="flex items-start">
                             <span className={`mr-2 mt-1 transition-colors duration-300 ${theme.accentBlue}`}>•</span>
@@ -278,7 +278,7 @@ export default function ProfessionalJourney() {
 
                       {/* Right Column - Second Half of Bullet Points */}
                       <div className="flex flex-col">
-                      <ul className={`leading-relaxed space-y-1.5 sm:space-y-2 transition-colors duration-300 ${theme.textSecondary} text-sm md:text-base`}>
+                      <ul className={`leading-relaxed space-y-1.5 sm:space-y-2 transition-colors duration-300 ${theme.textSecondary} text-base sm:text-lg md:text-xl`}>
                         {exp.points.slice(Math.ceil(exp.points.length / 2)).map((point, idx) => (
                           <li key={idx} className="flex items-start">
                             <span className={`mr-2 mt-1 transition-colors duration-300 ${theme.accentBlue}`}>•</span>
