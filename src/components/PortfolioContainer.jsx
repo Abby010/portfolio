@@ -29,29 +29,29 @@ export default function PortfolioContainer() {
 
       {/* Navigation */}
       <nav className={`relative ${theme.navBg} backdrop-blur-md border-b ${theme.borderBlue} transition-colors duration-300`} style={{ zIndex: 10 }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <div className="flex items-center space-x-2 sm:space-x-3">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-400 to-purple-600 rounded-lg flex items-center justify-center font-bold text-white text-base sm:text-lg">
+            <div className="flex items-center space-x-4 sm:space-x-6">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-400 to-purple-600 rounded-lg flex items-center justify-center font-bold text-white text-xl sm:text-2xl">
                 AM
               </div>
-              <span className={`${theme.textPrimary} font-bold tracking-wider text-xs sm:text-sm transition-colors duration-300 hidden sm:block`}>
+              <span className={`${theme.textPrimary} font-bold tracking-wider text-sm sm:text-base transition-colors duration-300 hidden sm:block`}>
                 ABHISHEK MEHTA_SOFTWARE ENGINEER
               </span>
-              <span className={`${theme.textPrimary} font-bold tracking-wider text-xs transition-colors duration-300 sm:hidden`}>
+              <span className={`${theme.textPrimary} font-bold tracking-wider text-sm transition-colors duration-300 sm:hidden`}>
                 A. MEHTA
               </span>
             </div>
 
             {/* Desktop Nav Items and Theme Toggle */}
-            <div className="hidden lg:flex items-center space-x-3">
-              <div className="flex space-x-1">
+            <div className="hidden lg:flex items-center space-x-6">
+              <div className="flex space-x-2">
                 {NAV_ITEMS.map((item) => (
                   <button
                     key={item}
                     onClick={() => setCurrentPage(item)}
-                    className={`px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300 ${
+                    className={`px-6 py-4 rounded-lg text-sm font-medium transition-all duration-300 ${
                       currentPage === item
                         ? currentTheme === 'dark' 
                           ? 'bg-blue-500/30 text-white shadow-lg shadow-blue-500/50'
@@ -69,14 +69,14 @@ export default function PortfolioContainer() {
               {/* Theme Toggle Button */}
               <button
                 onClick={toggleTheme}
-                className={`relative p-2.5 rounded-xl ${
+                className={`relative p-5 rounded-xl ${
                   currentTheme === 'dark'
                     ? 'bg-white/10 hover:bg-white/20'
                     : 'bg-gray-200 hover:bg-gray-300'
                 } transition-all duration-300 group`}
                 aria-label="Toggle theme"
               >
-                <div className="relative w-5 h-5">
+                <div className="relative w-10 h-10">
                   {/* Sun Icon */}
                   <motion.svg
                     initial={false}
@@ -125,17 +125,17 @@ export default function PortfolioContainer() {
             </div>
 
             {/* Mobile Menu Button and Theme Toggle */}
-            <div className="flex lg:hidden items-center space-x-2">
+            <div className="flex lg:hidden items-center space-x-4">
               <button
                 onClick={toggleTheme}
-                className={`relative p-2 rounded-xl ${
+                className={`relative p-4 rounded-xl ${
                   currentTheme === 'dark'
                     ? 'bg-white/10 hover:bg-white/20'
                     : 'bg-gray-200 hover:bg-gray-300'
                 } transition-all duration-300`}
                 aria-label="Toggle theme"
               >
-                <div className="relative w-5 h-5">
+                <div className="relative w-10 h-10">
                   <motion.svg
                     initial={false}
                     animate={{
@@ -178,14 +178,14 @@ export default function PortfolioContainer() {
               </button>
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className={`p-2 rounded-lg ${
+                className={`p-4 rounded-lg ${
                   currentTheme === 'dark'
                     ? 'bg-white/10 hover:bg-white/20 text-white'
                     : 'bg-gray-200 hover:bg-gray-300 text-gray-900'
                 } transition-all duration-300`}
                 aria-label="Toggle menu"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   {mobileMenuOpen ? (
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   ) : (
@@ -204,9 +204,9 @@ export default function PortfolioContainer() {
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.3 }}
-                className="lg:hidden mt-4 pb-4 overflow-hidden"
+                className="lg:hidden mt-8 pb-8 overflow-hidden"
               >
-                <div className="flex flex-col space-y-2">
+                <div className="flex flex-col space-y-4">
                   {NAV_ITEMS.map((item) => (
                     <button
                       key={item}
@@ -214,7 +214,7 @@ export default function PortfolioContainer() {
                         setCurrentPage(item)
                         setMobileMenuOpen(false)
                       }}
-                      className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
+                      className={`w-full text-left px-8 py-6 rounded-lg text-base font-medium transition-all duration-300 ${
                         currentPage === item
                           ? currentTheme === 'dark' 
                             ? 'bg-blue-500/30 text-white shadow-lg shadow-blue-500/50'
