@@ -471,7 +471,6 @@ export default function PortfolioContainer() {
                             src="/UOW LOGO.png" 
                             alt="University of Wollongong"
                             className="w-full h-full object-contain"
-                            style={{ transform: 'scale(1.23)' }}
                           />
                         </div>
                         <div className="flex-1 text-center sm:text-left">
